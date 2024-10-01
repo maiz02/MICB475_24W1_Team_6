@@ -1,6 +1,6 @@
 # October 1 - 2nd meeting
 
-### Attendees
+## Attendees
 * Dr. Sun
 * Sam
 * Andrea Garcia
@@ -9,7 +9,7 @@
 * Julia Jung
 * Chaeyoon Chang
 
-### Agenda
+## Agenda
 1) Discuss possible research questions
    - Possible research questions: different regions and...
      - asthma
@@ -21,8 +21,8 @@
 7) How much data processing is expected for the project proposal? --> What steps should we expect to take a long time?
 8) Do we have to specify in our rationale why all of our samples come from an MS population?
   
-### Minutes
-* Research questions
+## Minutes
+#### Research questions
 - asthma
   - 5 regions --> Might be easier to use countries instead of regions
   - Pros: easy to pick out in terms of the data
@@ -36,11 +36,11 @@
   - Not a strong choice
        - Asthma and allergy can be sold more as a theme
    
-* Dataset rationale
+#### Dataset rationale
 - Well annotated data set --> rationale
 - Use only the healthy samples
 
-* Aim 1: Data wrangling 
+#### Aim 1: Data wrangling 
 - Filtering metadata and manifest
 - Compare regions and then add in asthma stuff later
 - Create 2 new metadata categories: Combine regions and asthma, then regions and allergies
@@ -52,14 +52,14 @@
 - Metadata: sample_id, region/asthma, region/allergies --> Keep other metadata columns, just make new ones
   - Also: changing allergies column to yes or no 
 
-* Ideal minimum sample size
+#### Ideal minimum sample size
 - The dataset is pretty big --> Will probably be in the 100s, or a little less
 
-* Expectations for project proposal 
+#### Expectations for project proposal 
 - Project is data wrangling heavy --> Can write a section on data wrangling instead of processing
 - Can be adjusted because so much overhead is needed
 
-* Ideas for aims
+#### Ideas for aims
 - Aim 2: Data processing through QIIME2
 - Aim 3: Do diversity metrics only on region --> Taxonomic analysis
   - See if whether regionally, there is any differences before bringing asthma + allergies in
@@ -69,7 +69,7 @@
 - Possible 5th aim: Functional analysis
 - Most relevant analysis: Indicator taxa --> unique taxa to a cohort
  
- ### Action Items
+ ## Action Items
 * Start doing data wrangling by next week! --> So we can get as much help as possible 
 
 * Send email to Dr. Sun to get link to UJEMI articles
