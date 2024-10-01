@@ -73,7 +73,7 @@
 * Start doing data wrangling by next week! --> So we can get as much help as possible 
 
 * Send email to Dr. Sun to get link to UJEMI articles
-- But question is novel!
-- Get link for MS/eczema article
-- Check novelty in broader literature --> Novel in the sense it has not been done on this dataset
-- Can just check if our results matches that of the broader literature 
+   - But question is novel!
+   - Get link for MS/eczema article
+   - Check novelty in broader literature --> Novel in the sense it has not been done on this dataset
+   - Can just check if our results matches that of the broader literature 
