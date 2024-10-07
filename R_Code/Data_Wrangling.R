@@ -1,10 +1,10 @@
 library(tidyverse)
 
 # loading in metadata
-msmetafp <- "corrected_ms_metadata.tsv"
+msmetafp <- "MICB475_24W1_Team_6/MS_Files/corrected_ms_metadata.tsv"
 msmeta <- read_delim(msmetafp)
 
-msmanifestfp <- "ms_manifest.tsv"
+msmanifestfp <- "MICB475_24W1_Team_6/MS_Files/ms_manifest.tsv"
 msmanifest <- read_delim(msmanifestfp)
 
 # filtering for the columns we need
