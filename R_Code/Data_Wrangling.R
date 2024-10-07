@@ -20,6 +20,9 @@ site_country <- ifelse(x %in% c("San Francisco", "Boston", "New York", "Pittsbur
                                     ifelse(x == "San Sebastian", "Spain", x))))
 msmeta_col$site_x <- site_country
 
+library(dplyr)
+library(readr)
+
 # dropping samples with NA values
 msmeta_col <- msmeta_col %>%
   drop_na(asthma, allergies)
