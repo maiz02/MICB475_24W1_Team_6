@@ -11,4 +11,10 @@ Yna <br>
 - renamed each region into their respective country and updated the filtered metadata file
 - uploaded the metadata and manifest files to the GitHub repository
 
+**October 6** <br>
+Julia <br>
+- filtered out the rows of MS patients to obtain samples of healthy individuals from the metadata filtered by Yna
+- filtered out the rows containing NA values
+- Merged the remaining columns of metadata with the columns of interest and exported the filtered dataset in TSV format, which was then uploaded to the GitHub repository
+
 ## Finalized Codes ##
