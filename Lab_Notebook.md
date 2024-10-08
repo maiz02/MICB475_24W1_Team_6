@@ -10,6 +10,6 @@ Julia <br>
 - filtered out the rows containing NA values
 - Merged the remaining columns of metadata with the columns of interest and exported the filtered dataset in TSV format, which was then uploaded to the GitHub repository
 
-** October 7 **
+**October 7**
 Andrea <br>
 - reconciled the filtered metadata and manifest files to create a new, filtered manifest file
