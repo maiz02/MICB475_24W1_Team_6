@@ -8,7 +8,7 @@ msmanifestfp <- "MICB475_24W1_Team_6/MS_Files/ms_manifest.tsv"
 msmanifest <- read_delim(msmanifestfp)
 
 # filtering for the columns we need
-msmeta_col <- select(msmeta, "sample-id", "site_x", "allergies", "asthma")
+msmeta_col <- select(msmeta, "sample-id", "site_x", "allergies", "asthma", "disease")
 
 # combining regions into their countries
 x <- msmeta_col$site_x
@@ -41,3 +41,15 @@ filtered_msmeta <- filtered_msmeta %>%
 # exporting the filtered_msmeta to a TSV file
 output_filepath <- "filtered_ms_metadata.tsv"
 write_tsv(filtered_msmeta, output_filepath)
+
+## reconciling manifest based on filtered metadata
+
+# taking only the sample-id column
+filtered_metadata_only_samples <- select(filtered_msmeta, `sample-id`)
+
+# joining the filtered sample ids with the manifest file
+filtered_manifest <- left_join(filtered_metadata_only_samples, msmanifest)
+
+# exporting the filtered_manifest to a TSV file
+filtered_manifest_filepath <- "filtered_ms_manifest.tsv"
+write_tsv(filtered_manifest, filtered_manifest_filepath)
