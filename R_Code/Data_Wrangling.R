@@ -27,11 +27,17 @@ msmeta_col$site_x <- site_country
 msmeta_col <- msmeta_col %>%
   drop_na(asthma, allergies)
 
-#filtering healthy individuals
+# filtering healthy individuals
 msmeta_col <- msmeta_col %>%
   filter(disease != "MS")
 
-#generating filtered ms metadata set with the remaining columns
+# combining columns
+msmeta_col <- msmeta_col %>%
+  unite(country_allergies, site_x, allergies, sep=", ", remove=FALSE) %>%
+  unite(country_asthma, site_x, asthma, sep=", ", remove=FALSE) %>%
+  unite(allergies_and_asthma, allergies, asthma, sep=", ", remove=FALSE)
+
+# generating filtered ms metadata set with the remaining columns
 filtered_msmeta <- msmeta_col %>%
   left_join(msmeta, by = "sample-id")
 
