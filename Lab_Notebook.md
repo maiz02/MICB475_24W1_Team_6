@@ -15,6 +15,7 @@ Andrea <br>
 - reconciled the filtered metadata and manifest files to create a new, filtered manifest file
 
 **October 13** <br>
+Yna <br>
 - combined columns that we will be using for our data processing in QIIME2
 - updated the metadata and manifest files to reflect this
 - uploaded the corrected files into the GitHub repository
