@@ -49,7 +49,6 @@ output_filepath <- "filtered_ms_metadata.tsv"
 write_tsv(filtered_msmeta, output_filepath)
 
 #### RECONCILING MANIFEST BASED ON FILTERED DATA ####
-
 # taking only the sample-id column
 filtered_metadata_only_samples <- select(filtered_msmeta, `sample-id`)
 
