@@ -1,4 +1,4 @@
-# October 7 - 3rd meeting
+# October 15 - 4th meeting
 
 ## Attendees
 - Sam
