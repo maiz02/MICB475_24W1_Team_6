@@ -13,12 +13,12 @@
 2) Assign parts for team proposal
    
 ## Minutes
-# Update on data wrangling
+#### Update on data wrangling
 - Was able to subset the manifest file based on filtered metadata file
 - Combined columns to be used --> combined into final metadata file
   - Includes combined columns and all other columns from original metadata
 
-# Assigning parts for team proposal 
+#### Assigning parts for team proposal 
 1) Introduction and Background - Julia
    - Why question is important
    - How does it fit into current literature --> Builds up into primary research question
@@ -49,7 +49,7 @@
 8) Dataset overview - Andrea
 9) Participation report - Everyone/Julia
 
-# Other notes
+#### Other notes
 - Another group is also working on asthma/allergies --> just comparing age groups instead of countries or region
   - Try not to touch on age in our research
 - Evelyn is really looking for biological aim to objective --> ex. We expect that the effects on asthma and allergies will be different due to diet
