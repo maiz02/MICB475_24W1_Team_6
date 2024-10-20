@@ -1,20 +1,15 @@
 # MICB475: Data Science Research in Microbiology
 
+Google Doc for Team Proposal
+https://docs.google.com/document/d/1Rz8cJPVH6HkvqzbCbbIUKSmT2n3V2TV_GVrX2Hr1f3c/edit?tab=t.0
+
 ## Meeting Minutes ##
 1) [September 23](/Meeting_Minutes/September_23.md)
 2) [October 1](/Meeting_Minutes/October_1.md)
+3) [October 7](/Meeting_Minutes/October_7.md)
+4) [October 15](/Meeting_Minutes/October_15.md)
+5) [October 16](/Meeting_Minutes/October_16.md)
 
-## Lab Notebook ##
-**October 5** <br>
-Yna <br>
-- filtered metadata file by selecting only for the columns to be used in our project (sample id, site, allergies, asthma)
-- renamed each region into their respective country and updated the filtered metadata file
-- uploaded the metadata and manifest files to the GitHub repository
-
-**October 6** <br>
-Julia <br>
-- filtered out the rows of MS patients to obtain samples of healthy individuals from the metadata filtered by Yna
-- filtered out the rows containing NA values
-- Merged the remaining columns of metadata with the columns of interest and exported the filtered dataset in TSV format, which was then uploaded to the GitHub repository
+## [Lab Notebook](/Lab_Notebook.md) ##
 
 ## Finalized Codes ##
