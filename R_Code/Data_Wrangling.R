@@ -18,7 +18,7 @@ x <- msmeta_col$site_x
 
 site_country <- ifelse(x %in% c("San Francisco", "Boston", "New York", "Pittsburgh"), 
                       "USA", 
-                      ifelse(x == "Edinburgh", "Scotland", 
+                      ifelse(x == "Edinburgh", "United Kingdom", 
                              ifelse(x == "Buenos Aires", "Argentina", 
                                     ifelse(x == "San Sebastian", "Spain", x))))
 msmeta_col$site_x <- site_country
