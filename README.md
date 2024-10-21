@@ -9,7 +9,7 @@ https://docs.google.com/document/d/1Rz8cJPVH6HkvqzbCbbIUKSmT2n3V2TV_GVrX2Hr1f3c/
 3) [October 7](/Meeting_Minutes/October_7.md)
 4) [October 15](/Meeting_Minutes/October_15.md)
 5) [October 16](/Meeting_Minutes/October_16.md)
-
+6) [October 21](/Meeting_Minutes/October_21.md)
 ## [Lab Notebook](/Lab_Notebook.md) ##
 
 ## Finalized Codes ##
