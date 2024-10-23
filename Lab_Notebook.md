@@ -23,3 +23,8 @@ Yna <br>
 **October 19** <br>
 Yna <br>
 - updated the code and the metadata file to change Scotland to UK
+
+**October 23** <br>
+Julia <br>
+- updated the code and the metadata file to combine high/low UPF countries
+
