@@ -44,6 +44,20 @@ filtered_msmeta <- msmeta_col %>%
 filtered_msmeta <- filtered_msmeta %>%
   rename("ms_status" = "disease.x", "country" = "site_x.x", "allergies" = "allergies.x", "asthma" = "asthma.x", "region" = "site_x.y")
 
+#adding the new column based on upf status -> high_upf(USA/UK) and low_upf(Spain/Argentina)
+filtered_msmeta <- filtered_msmeta %>%
+  mutate(upf_status = ifelse(country %in% c("USA", "UK"), "upf_high",
+                             ifelse(country %in% c("Argentina", "Spain"), "upf_low", NA)))
+
+#adding the new columns that indicates upf status and allergy/asthma conditions
+filtered_msmeta <- filtered_msmeta %>%
+  mutate(upf_allergies = paste(upf_status, allergies, sep = ", ")) %>%
+  mutate(upf_asthma = paste (upf_status, asthma, sep = ", "))
+
+#Reordering the columns
+filtered_msmeta <- filtered_msmeta %>%
+  select("sample-id", "upf_status","upf_allergies", "upf_asthma", everything())
+
 # exporting the filtered_msmeta to a TSV file
 output_filepath <- "filtered_ms_metadata.tsv"
 write_tsv(filtered_msmeta, output_filepath)
