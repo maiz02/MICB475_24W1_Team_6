@@ -23,59 +23,48 @@
 ## Minutes
 
 - Timeline: will be released tmr
-The intro and background can be revised - why asthma and allergies? mention it in the intro
-project has been changed - but the revision grading will be based on the feedback 
-Figure title should be re-positioned
-research question should be more in detail
-The proposal won't be held accountable for the later steps
-countries -> reword them to low/high UPF groups (research question and intro) - don't touch the rest of the proposal
+  What should be revised for the second submission
+   - The intro and background can be revised - why asthma and allergies? -> mention it in the intro
+   - the project has been changed -> but the revision grading will be based on the feedback 
+   - Figure title should be re-positioned
+   - research question should be more in detail
+   - The proposal won't be held accountable for the later steps
+   - countries -> reword them to low/high UPF groups (research question and intro) - don't touch the wording of the rest of the proposal
+   - in the revised proposal, just pretend we don't do the new proposal -> re-grading will be done on whether the feedbacks are revised or not
+   - New research question
+      - should we add this to a new research question/proposal?
+         - If that makes more clearer
+         - Change the research objective not similar to the title
 
-Rarefaction - will try duplicating the samples (not a requirement for the presentation - no need to do so if it is not working)
-don't have to mention it in the methods section
+- Rarefaction
+   - will try duplicating the samples (not a requirement for the presentation - no need to work on it if it is not working)
+   - We don't have to mention it in the methods section
 
-- New research question
-  Adding these to the revised proposal - should we add a new research question/proposal?
-  -> If that makes more clearer
-  -> Change the research objective not similar to the title
-  
-- Oral presentation will be on Dec 3rd / 5th
-  - Analysis should be done 2 weeks before the oral presentation
+- Oral presentation will be on Dec 3rd & 5th
+  - Analysis should be done 2 weeks before the oral presentation so that we have time to work on troubleshooting if needed
 
-- Splitting aims
-   - Half of the team work on asthma, and the other half on allergies (on Aim 1 & 2)
-   - Aim 3: looking at the asthma and allergies altogether
- 
-- Aim 1 & 2: since we are doing multivariable -> steps should be changed
+- Aim 1 & 2 -> deadline (Nov 18th)
+   - Half of the team will work on asthma, and the other half on allergies (Aim 1 & 2)
+   - since we are doing multivariable -> steps should be changed
      - Now we are looking at the UPF groups
-     - instead of doing it within the countries, just look at the whole thing
-     - in the proposal just pretend we don't do the new proposal (UPF)
+     - instead of doing it within the countries, each country will be analyzed unbiasedly
+         - Start with the unbiased analysis country-wise, then pull up the PCoA plot to group the high/low UPF countries
+         - ex) label countries with the colours of the dots, yes/no allergies with the size of the dots etc..
+         - If the similarity within the high UPF / low UPF group is dictated, -> UPF consumption is changing the diversity of the gut microbiome
+         - Variable would be each country, and then with/without allergies/asthma
+         - Condition of allergies/asthma and UPF consumption group should be in one plot for each aim (Aim 1&2)
+   - beta diversity metrics -> Do all of the metrics -> and then do the Permanova
+        - If the results show differences between the metrics, then we can assume that that's because of the difference in the aspects of each metric (highlight the differences in the aspects each metric emphasizes)
 
-- beta diversity metrics -> Do all of the metrics
-- if there are differences between the results of the metrics, then we can say that that's because of the phylogenetic distance (what weighted unifrac does)
-
-- Sample groups - are we doing healthy vs patients (allergies, asthma) and also account for the High & low UPF groups
-  - beta diversity -> then Permanova
-  - put the countries first, and then similarity was dictated because the country is high/low UPf -> UPF is changing the diversity
-  - use PCoA plot
-  - variable is country, with/without allergies
-  - group the high UPF and low UPF with the oval
-  - No allergies  / Yes allergies / High UPF / Low UPF in one plot for each aim
- 
-- For the first two aims -> do the countries first
-     - start with unbiasedly analysis country-wise -> then the PCoA plot shows low UPF countries are grouped / high UPF countries grouped
-     - country -> label with colour, yes/no allergies -> label with the size, group the high/low UPF countries
- 
-- Differential abundance -> for Aim 3
-  - DESeq and core microbiome and indicator species
+- Aim 3: Analyzing the differential abundance
+   - DESeq / Core microbiome / Indicator species in all aspects
 
 - In general, for the final manuscript:
-  -How do allergies and asthma relate to the change of diversity within the gut microbiome between countries with high and low ultra-processed food intake? -> can be the new proposal question
+  - How do allergies and asthma relate to the change of diversity within the gut microbiome between countries with high and low ultra-processed food intake? -> can be the new proposal question
   - introducing more variables like UPF other than countries -> keep the countries for the titles, add the UPF more into the intro
 
-- Setting the deadline for aims 1 & 2
-  - until Nov 18th
- 
-- We will keep our meeting on Mondays, in person as usual
  
  ## Action Items
+ 
 - Start working on the analysis of aims 1 & 2 (deadline: Nov 18th)
+- We will keep our meeting on Mondays, in person as usual
