@@ -23,7 +23,8 @@
 ## Minutes
 
 - Timeline: will be released tmr
-  - What should be revised for the second submission
+  
+- What should be revised for the second submission
    - The intro and background can be revised - why asthma and allergies? -> mention it in the intro
    - the project has been changed -> but the revision grading will be based on the feedback 
    - Figure title should be re-positioned
