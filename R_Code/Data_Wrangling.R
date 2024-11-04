@@ -54,12 +54,13 @@ filtered_msmeta <- filtered_msmeta %>%
   mutate(upf_allergies = paste(upf_status, allergies, sep = ", ")) %>%
   mutate(upf_asthma = paste (upf_status, asthma, sep = ", "))
 
-#Reordering the columns
+#duplicating sample-id column for proper alpha rarefaction and reordering columns
+filtered_msmeta$`sample-id_2` <- filtered_msmeta$`sample-id`
 filtered_msmeta <- filtered_msmeta %>%
-  select("sample-id", "upf_status","upf_allergies", "upf_asthma", everything())
+  select("sample-id", "sample-id_2", "upf_status","upf_allergies", "upf_asthma", everything())
 
 # exporting the filtered_msmeta to a TSV file
-output_filepath <- "filtered_ms_metadata.tsv"
+output_filepath <- "updated_filtered_ms_metadata.tsv"
 write_tsv(filtered_msmeta, output_filepath)
 
 #### RECONCILING MANIFEST BASED ON FILTERED DATA ####
