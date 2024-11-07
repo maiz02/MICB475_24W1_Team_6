@@ -11,6 +11,8 @@ https://docs.google.com/document/d/1Rz8cJPVH6HkvqzbCbbIUKSmT2n3V2TV_GVrX2Hr1f3c/
 5) [October 16](/Meeting_Minutes/October_16.md)
 6) [October 21](/Meeting_Minutes/October_21.md)
 7) [October 28](/Meeting_Minutes/October_28.md)
+7) [November 4](/Meeting_Minute/November_4.md)
+
 ## [Lab Notebook](/Lab_Notebook.md) ##
 
 ## Finalized Codes ##
