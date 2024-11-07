@@ -1,0 +1,125 @@
+# Transferring filtered MS Files from RStudio to Team Server
+## On local server
+scp Project/MICB475_24W1_Team_6/MS_Files/updated_filtered_ms_metadata.tsv root@10.19.139.185:.
+scp Project/MICB475_24W1_Team_6/MS_Files/filtered_ms_manifest.tsv root@10.19.139.185:.
+
+mv ./updated_filtered_ms_metadata.tsv /data/dataset_files
+mv ./filtered_ms_manifest.tsv /data/dataset_files
+
+# Importing and demultiplexing data
+qiime tools import \
+  --type "SampleData[SequencesWithQuality]" \
+  --input-format SingleEndFastqManifestPhred33V2 \
+  --input-path ~/data/dataset_files/filtered_ms_manifest.tsv \
+  --output-path ~/data/team_project/ms_demux_seqs.qza
+
+qiime demux summarize \
+  --i-data ms_demux_seqs.qza \
+  --o-visualization ms_demux.qzv
+
+# Denoising and Clustering using Deblur
+
+# Filtering out reads based on the quality score
+qiime quality-filter q-score \
+ --i-demux ms_demux_seqs.qza \
+ --o-filtered-sequences ms_demux_filtered.qza \
+ --o-filter-stats ms_demux_filter_stats.qza
+ 
+# Using deblur for denoising
+qiime deblur denoise-16S \
+  --i-demultiplexed-seqs ms_demux_filtered.qza \
+  --p-trim-length 151 \
+  --o-representative-sequences ms_rep_seqs.qza \
+  --o-table ms_table.qza \
+  --p-sample-stats \
+  --o-stats ms_deblur_stats.qza
+  
+# Visualize ASVs stats, convert qza to qzv files
+qiime feature-table summarize \
+  --i-table ms_table.qza \
+  --o-visualization table.qzv \
+  --m-sample-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv
+  
+qiime feature-table tabulate-seqs \
+  --i-data ms_rep_seqs.qza \
+  --o-visualization ms_rep_seqs.qzv
+
+# Taxonomic analysis
+qiime feature-classifier classify-sklearn \
+  --i-classifier /mnt/datasets/classifiers/silva-138-99-515-806-nb-classifier.qza \
+  --i-reads ms_rep_seqs.qza \
+  --o-classification ms_taxonomy.qza
+
+qiime metadata tabulate \
+  --m-input-file ms_taxonomy.qza \
+  --o-visualization ms_taxonomy.qzv
+
+# Taxonomy barplots
+qiime taxa barplot \
+  --i-table ms_table.qza \
+  --i-taxonomy ms_taxonomy.qza \
+  --m-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv \
+  --o-visualization ms_taxa_bar_plots.qzv
+
+# Filter out mitochondria and chloroplast 
+qiime taxa filter-table \
+  --i-table ms_table.qza \
+  --i-taxonomy ms_taxonomy.qza \
+  --p-exclude mitochondria,chloroplast \
+  --o-filtered-table ms_table_no_mitochondria_no_chloroplast.qza
+
+# Frequency based filtering
+qiime feature-table filter-features \
+--i-table ms_table_no_mitochondria_no_chloroplast.qza \
+--p-min-frequency 216 \
+--o-filtered-table ms_final_filtered_table.qza
+  
+qiime feature-table summarize \
+  --i-table ms_final_filtered_table.qza \
+  --o-visualization ms_final_filtered_table.qzv \
+  --m-sample-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv
+
+# Taxa barplot after filtering
+qiime taxa barplot \
+  --i-table ms_final_filtered_table.qza \
+  --i-taxonomy ms_taxonomy.qza \
+  --m-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv \
+  --o-visualization ms_filtered_taxa_bar_plots.qzv
+
+# Generate a tree for phylogenetic diversity analyses
+qiime phylogeny align-to-tree-mafft-fasttree \
+  --i-sequences ms_rep_seqs.qza \
+  --o-alignment ms_aligned_rep_seqs.qza \
+  --o-masked-alignment ms_masked_aligned_rep_seqs.qza \
+  --o-tree ms_unrooted_tree.qza \
+  --o-rooted-tree ms_rooted_tree.qza 
+
+qiime diversity alpha-rarefaction \
+  --i-table ms_final_filtered_table.qza \
+  --i-phylogeny ms_rooted_tree.qza \
+  --p-max-depth 18100 \
+  --m-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv \
+  --o-visualization ms_alpha_rarefaction.qzv
+
+# Beta Diversity Metrics
+
+# FOR ALLERGIES
+
+qiime diversity core-metrics-phylogenetic \
+  --i-phylogeny ms_rooted_tree.qza \
+  --i-table ms_final_filtered_table.qza \
+  --p-sampling-depth 4300 \
+  --m-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv \
+  --output-dir ms_core_metrics_results
+
+qiime diversity beta-group-significance \
+  --i-distance-matrix ms_core_metrics_results/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv \
+  --m-metadata-column upf_allergies \
+  --o-visualization ms_core_metrics_results/unweighted_unifrac_upf_allergies_significance.qzv \
+  --p-pairwise
+
+scp root@10.19.139.185:~/data/team_project/ms_alpha_rarefaction.qzv .
+
+scp root@10.19.139.185:~/data/team_project/ms_core_metrics_results/unweighted_unifrac_upf_allergies_significance.qzv .
+
