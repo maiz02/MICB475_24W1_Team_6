@@ -190,3 +190,24 @@ scp root@10.19.139.185:/data/team_project/ms_core_metrics_results/bray_curtis_up
 scp root@10.19.139.185:/data/team_project/ms_core_metrics_results/weighted_unifrac_upf_asthma_significance.qzv .
 
 scp root@10.19.139.185:/data/team_project/ms_core_metrics_results/jaccard_upf_asthma_significance.qzv .
+
+
+#Convert .qza files to .qzv files 
+mkdir export
+qiime tools export \
+  --input-path ms_rooted_tree.qza \
+  --output-path export
+
+qiime tools export \
+  --input-path ms_taxonomy.qza \
+  --output-path export
+
+qiime tools export \
+  --input-path ms_table.qza \
+  --output-path export
+
+biom convert -i feature-table.biom --to-tsv -o feature-table.txt
+
+#Download .qzv files to local computer
+scp -r root@10.19.139.185:~/data/team_project/export .
+
