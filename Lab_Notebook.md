@@ -28,3 +28,9 @@ Yna <br>
 Julia <br>
 - updated the code and the metadata file to combine high/low UPF countries
 
+**November 15** <br>
+Yna <br>
+- updated metadata to add new columns (allergies_yn, asthma_yn) to be used for the PCoA plots
+- updated phyloseq object code in data wrangling code to reflect the updated metadata
+- generated PCoA plots
+
