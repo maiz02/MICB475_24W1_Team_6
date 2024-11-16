@@ -19,3 +19,12 @@ Yna <br>
 - combined columns that we will be using for our data processing in QIIME2
 - updated the metadata and manifest files to reflect this
 - uploaded the corrected files into the GitHub repository
+
+**October 19** <br>
+Yna <br>
+- updated the code and the metadata file to change Scotland to UK
+
+**October 23** <br>
+Julia <br>
+- updated the code and the metadata file to combine high/low UPF countries
+
