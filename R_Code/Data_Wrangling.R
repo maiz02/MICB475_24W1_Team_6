@@ -88,15 +88,15 @@ write_tsv(filtered_manifest, filtered_manifest_filepath)
 
 #####Creating phyloseq object #####
 #load in metadata
-meta <- read_delim(file = "filtered_ms_metadata.tsv", delim = "\t")
+meta <- read_delim(file = "MS_Files/final_filtered_ms_metadata.tsv", delim = "\t")
 #load in features table
-otu <- read_delim(file="feature-table.txt", delim = "\t", skip=1)
+otu <- read_delim(file="QIIME2_Files/export/feature-table.txt", delim = "\t", skip=1)
 
 #load in your taxonomy file
-tax <- read_delim(file = "taxonomy.tsv", delim="\t")
+tax <- read_delim(file = "QIIME2_Files/export/taxonomy.tsv", delim="\t")
 
 #load in tree
-phylotreefp <- "tree.nwk"
+phylotreefp <- "QIIME2_Files/export/tree.nwk"
 phylotree <- read.tree(phylotreefp)
 
 #### Format OTU table into phyloseq object ####
@@ -120,20 +120,21 @@ TAX <- tax_table(tax_mat)
 
 
 #Create phyloseq object
-mpt <- phyloseq(OTU, SAMP, TAX, phylotree)
+ms <- phyloseq(OTU, SAMP, TAX, phylotree)
 
 #### PRUNE out the bad ASVs ####
 # Remove ASVs that have less than 5 counts total with prune (typically mistakes/seq error)
-mpt_filt_nolow <- filter_taxa(mpt, function(x) sum(x)>5, prune = TRUE)
+ms_filt_nolow <- filter_taxa(ms, function(x) sum(x)>5, prune = TRUE)
 # Remove samples with less than 100 reads (ex. poor sequencing run) 
-mpt_filt_nolow_samps <- prune_samples(sample_sums(mpt_filt_nolow)>100, mpt_filt_nolow)
+ms_filt_nolow_samps <- prune_samples(sample_sums(ms_filt_nolow)>100, ms_filt_nolow)
 # !is.na(month) --> keeping anything that ISN'T N/A!
-mpt_final <- subset_samples(mpt_filt_nolow_samps, !is.na(month) )
-
+ms_final <- subset_samples(ms_filt_nolow_samps, !is.na(month) )
+ms_rare <- rarefy_even_depth(ms_final, rngseed = 1, sample.size = 6000)
 
 #save 
-save(mpt, file="mpt.RData")
-save(mpt_final, file="mpt_final.RData")
+save(ms, file="R files/ms.RData")
+save(ms_final, file="R files/ms_final.RData")
+save(ms_rare, file="R files/ms_rare.RData")
 
 
 

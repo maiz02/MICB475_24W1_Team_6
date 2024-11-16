@@ -11,6 +11,7 @@ save(ms_rare, file="R files/ms_rare.RData")
 metadata <- ms_rare@sam_data
 metadata$asthma <- factor(metadata$asthma, levels = c(0, 1), labels = c("Without asthma", "With asthma"))
 
+load("R files/ms_rare.RData")
 
 # all countries
 
@@ -18,9 +19,7 @@ metadata$asthma <- factor(metadata$asthma, levels = c(0, 1), labels = c("Without
 # bray-curtis
 bc_dm <- distance(ms_rare, method="bray")
 pcoa_bc <- ordinate(ms_rare, method="PCoA", distance=bc_dm)
-plot_ordination(ms_rare, pcoa_bc, color = "upf_status", 
-                shape = "asthma") +
-  scale_shape_manual(values = c(16, 17))
+plot_ordination(ms_rare, pcoa_bc, color = "upf_status", shape = "asthma")
 
 
 #### Beta diversity #####
