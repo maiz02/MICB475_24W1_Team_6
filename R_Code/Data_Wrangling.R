@@ -132,9 +132,9 @@ ms_final <- subset_samples(ms_filt_nolow_samps, !is.na(month) )
 ms_rare <- rarefy_even_depth(ms_final, rngseed = 1, sample.size = 6000)
 
 #save 
-save(ms, file="R files/ms.RData")
-save(ms_final, file="R files/ms_final.RData")
-save(ms_rare, file="R files/ms_rare.RData")
+save(ms, file="R_Files/ms.RData")
+save(ms_final, file="R_Files/ms_final.RData")
+save(ms_rare, file="R_Files/ms_rare.RData")
 
 
 
