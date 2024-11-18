@@ -23,5 +23,5 @@ write.csv(permanova_bray_allergies, "R_Files/permanova_bray_allergies.csv", row.
 write.csv(permanova_jacc_allergies, "R_Files/permanova_jacc_allergies.csv", row.names = TRUE)
 write.csv(permanova_wuni_asthma, "R_Files/permanova_wuni_asthma.csv", row.names = TRUE)
 write.csv(permanova_bray_asthma, "R_Files/permanova_bray_asthma.csv", row.names = TRUE)
-write.csv(permanova_jacc_asthma, "R_Files/permanova_wuni_asthma.csv", row.names = TRUE)
+write.csv(permanova_jacc_asthma, "R_Files/permanova_jacc_asthma.csv", row.names = TRUE)
 
