@@ -38,3 +38,7 @@ Yna <br>
 Yna <br>
 - made new PCoA plots that show UPF status, allergies, and asthma all in one plot
 
+**November 18** <br>
+Chaeyoon <br>
+- ran PERMANOVA with the beta diversity metrics (weighted unifrac, bray-curtis, jaccard) and tabulated results
+
