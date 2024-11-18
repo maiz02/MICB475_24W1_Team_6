@@ -218,4 +218,4 @@ qiime composition ancom \
   --i-table feature_table.qza \
   --m-metadata-file final_filtered_ms_metadata.tsv \
   --m-metadata-column upf_asthma \
-  --o-visualization ancom_results.qzv
+  --o-visualization upf_asthma_ancom_results.qzv
