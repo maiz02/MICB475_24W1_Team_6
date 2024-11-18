@@ -10,3 +10,8 @@ df <- as.data.frame(sample_data(ms_rare))
 adonis2(dm_unifrac ~ upf_status * allergies, data =df)
 adonis2(dm_braycurtis ~ upf_status*allergies, data =df)
 adonis2(dm_jaccard ~ upf_status*allergies, data =df)
+
+
+adonis2(dm_unifrac ~ upf_status * asthma, data =df)
+adonis2(dm_braycurtis ~ upf_status*asthma, data =df)
+adonis2(dm_jaccard ~ upf_status*asthma, data =df)
