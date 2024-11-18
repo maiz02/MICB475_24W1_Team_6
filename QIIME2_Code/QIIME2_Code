@@ -211,3 +211,11 @@ biom convert -i feature-table.biom --to-tsv -o feature-table.txt
 #Download .qzv files to local computer
 scp -r root@10.19.139.185:~/data/team_project/export .
 
+
+#Running ancom on qiime
+
+qiime composition ancom \
+  --i-table feature_table.qza \
+  --m-metadata-file final_filtered_ms_metadata.tsv \
+  --m-metadata-column upf_asthma \
+  --o-visualization ancom_results.qzv
