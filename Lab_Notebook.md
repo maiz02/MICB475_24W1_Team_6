@@ -34,3 +34,6 @@ Yna <br>
 - updated phyloseq object code in data wrangling code to reflect the updated metadata
 - generated PCoA plots
 
+**November 17** <br>
+- made new PCoA plots that show UPF status, allergies, and asthma all in one plot
+
