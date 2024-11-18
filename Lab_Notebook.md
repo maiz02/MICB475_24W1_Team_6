@@ -35,5 +35,6 @@ Yna <br>
 - generated PCoA plots
 
 **November 17** <br>
+Yna <br>
 - made new PCoA plots that show UPF status, allergies, and asthma all in one plot
 
