@@ -137,8 +137,8 @@ sample_data(ms_rare)$upf_status <- factor(
   sample_data(ms_rare)$upf_status,
   levels = c("upf_low", "upf_high"))
 wuni_both_pcoa <- plot_ordination(ms_rare, pcoa_both_wuni,
-                                 color = "asthma_yn", 
-                                 shape = "allergies_yn") +
+                                  color = "asthma_yn", 
+                                  shape = "allergies_yn") +
   geom_point(aes(size = upf_status), alpha = 0.7) +
   scale_size_manual(values = c("upf_low" = 1, "upf_high" = 4)) +
   labs(title = "Weighted UniFrac PCoA Plot",
@@ -151,6 +151,26 @@ wuni_both_pcoa <- plot_ordination(ms_rare, pcoa_both_wuni,
   theme_minimal() +
   theme(legend.position = "right")
 wuni_both_pcoa
+
+# updated wuni both
+sample_data(ms_rare)$grouping <- paste(
+  sample_data(ms_rare)$upf_status,
+  sample_data(ms_rare)$asthma_yn,
+  sample_data(ms_rare)$allergies_yn,
+  sep = ", "
+)
+
+updated_wuni_both_pcoa <- plot_ordination(ms_rare, pcoa_both_wuni,
+                                  color = "grouping") +
+  geom_point(alpha = 0.7) +
+  stat_ellipse(aes(color = grouping), level = 0.95, linewidth = 0.8) +
+  labs(title = "Weighted UniFrac PCoA Plot",
+       color = "Groups (UPF, Asthma, Allergies)") +
+  guides(color = guide_legend(order = 1)) +
+  theme(legend.position = "right") +
+  xlim(-0.060, 0.05) +
+  ylim(-0.050, 0.055)
+updated_wuni_both_pcoa
 
 #### COUNTRIES ####
 # all countries
@@ -225,4 +245,8 @@ ggsave("R_files/uni_both_pcoa.png",
 
 ggsave("R_files/wuni_both_pcoa.png",
        wuni_both_pcoa,
+       height=4, width=5)
+
+ggsave("R_files/updated_wuni_both_pcoa.png",
+       updated_wuni_both_pcoa,
        height=4, width=5)
