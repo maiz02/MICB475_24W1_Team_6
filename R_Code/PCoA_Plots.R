@@ -153,17 +153,32 @@ wuni_both_pcoa <- plot_ordination(ms_rare, pcoa_both_wuni,
 wuni_both_pcoa
 
 # updated wuni both
-sample_data(ms_rare)$grouping <- paste(
-  sample_data(ms_rare)$upf_status,
-  sample_data(ms_rare)$asthma_yn,
-  sample_data(ms_rare)$allergies_yn,
-  sep = ", "
-)
+sample_data(ms_rare)$grouping <- paste(sample_data(ms_rare)$upf_status,
+                                       sample_data(ms_rare)$asthma_yn,
+                                       sample_data(ms_rare)$allergies_yn,
+                                       sep = ", ")
 
 updated_wuni_both_pcoa <- plot_ordination(ms_rare, pcoa_both_wuni,
                                   color = "grouping") +
   geom_point(alpha = 0.7) +
   stat_ellipse(aes(color = grouping), level = 0.95, linewidth = 0.8) +
+  scale_color_manual(
+    values = c("upf_high, no, no" = "#E41A1C", 
+                "upf_high, no, yes" = "#377EB8",
+                "upf_high, yes, no" = "#4DAF4A",
+                "upf_high, yes, yes" = "#FF7F00",
+                "upf_low, no, no" = "#F781BF",
+                "upf_low, no, yes" = "#984EA3",
+                "upf_low, yes, no" = "#FFBF00",
+                "upf_low, yes, yes" = "#00BFC4"),
+    labels = c("upf_high, no, no" = "High UPF, No asthma, No allergies", 
+               "upf_high, no, yes" = "High UPF, No asthma, Allergies", 
+               "upf_high, yes, no" = "High UPF, Asthma, No allergies",
+               "upf_high, yes, yes" = "High UPF, Asthma, Allergies",
+               "upf_low, no, no" = "Low UPF, No asthma, No allergies",
+               "upf_low, no, yes" = "Low UPF, No asthma, Allergies",
+               "upf_low, yes, no" = "Low UPF, Asthma, No allergies",
+               "upf_low, yes, yes" = "Low UPF, Asthma, Allergies")) +
   labs(title = "Weighted UniFrac PCoA Plot",
        color = "Groups (UPF, Asthma, Allergies)") +
   guides(color = guide_legend(order = 1)) +
