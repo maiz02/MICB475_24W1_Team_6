@@ -42,7 +42,7 @@ gg_richness_low <- plot_richness(upf_phyloseq_rare_low, x = "upf_asthma",
 gg_richness_low
 
 ggsave(filename = "R_Files/gg_richness_low.png", 
-       gg_richness_high,
+       gg_richness_low,
        height=4, width=6)
 
 # Faith's PD
@@ -58,5 +58,5 @@ pd_plot_low <- ggplot(sample_data(upf_phyloseq_rare_low), aes(upf_asthma, PD)) +
 pd_plot_low
 
 ggsave(filename = "R_Files/pd_plot_low.png", 
-       pd_plot_high,
+       pd_plot_low,
        height=4, width=6)
