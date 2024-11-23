@@ -113,7 +113,6 @@ upf_phyloseq_final <- subset_samples(upf_phyloseq_nolow_samps, !is.na(upf_status
 # cex decreases font size
 rarecurve(t(as.data.frame(otu_table(upf_phyloseq_final))), cex=0.1)
 upf_phyloseq_rare <- rarefy_even_depth(upf_phyloseq_final, rngseed = 1, sample.size = 1000)
-#rngseed: keeps the reproducibility
 
 ##### Saving #####
 save(upf_phyloseq_final, file="R_Code/upf_phyloseq_final.RData")
