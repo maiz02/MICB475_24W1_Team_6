@@ -1,4 +1,4 @@
-# October 28 - 7th meeting
+# November 4 - 8th meeting
 
 ## Attendees
 - Andrea Garcia

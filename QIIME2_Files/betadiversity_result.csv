@@ -1,0 +1,29 @@
+allergies_weighted_unifrac,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value,,asthma_weighted_unifrac,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value
+,"upf_high, 0","upf_high, 1",267,999,1.649338863,0.106,0.1272,,,"upf_high, 0","upf_high, 1",267,999,1.514378941,0.17,0.17
+,"upf_high, 0","upf_low, 0",273,999,2.83796663,0.025,0.0375,,,"upf_high, 0","upf_low, 0",365,999,4.078693924,0.006,0.018
+,"upf_high, 0","upf_low, 1",177,999,3.275102703,0.023,0.0375,,,"upf_high, 0","upf_low, 1",241,999,3.072875895,0.017,0.0255
+,"upf_high, 1","upf_low, 0",238,999,4.974819516,0.002,0.012,,,"upf_high, 1","upf_low, 0",174,999,4.683961508,0.003,0.018
+,"upf_high, 1","upf_low, 1",142,999,3.922301535,0.006,0.018,,,"upf_high, 1","upf_low, 1",50,999,3.439405393,0.016,0.0255
+,"upf_low, 0","upf_low, 1",148,999,1.024784949,0.343,0.343,,,"upf_low, 0","upf_low, 1",148,999,1.565390508,0.162,0.17
+allergies_bray_curtis,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value,,asthma_bray_curtis,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value
+,"upf_high, 0","upf_high, 1",267,999,1.334951685,0.064,0.0768,,,"upf_high, 0","upf_high, 1",267,999,1.397157976,0.054,0.054
+,"upf_high, 0","upf_low, 0",273,999,3.448776355,0.001,0.002,,,"upf_high, 0","upf_low, 0",365,999,4.648579862,0.001,0.002
+,"upf_high, 0","upf_low, 1",177,999,1.947460741,0.003,0.0045,,,"upf_high, 0","upf_low, 1",241,999,2.211864857,0.002,0.003
+,"upf_high, 1","upf_low, 0",238,999,5.208048483,0.001,0.002,,,"upf_high, 1","upf_low, 0",174,999,4.121014515,0.001,0.002
+,"upf_high, 1","upf_low, 1",142,999,2.558264731,0.001,0.002,,,"upf_high, 1","upf_low, 1",50,999,2.425034595,0.001,0.002
+,"upf_low, 0","upf_low, 1",148,999,0.886698002,0.645,0.645,,,"upf_low, 0","upf_low, 1",148,999,1.49400426,0.049,0.054
+allergies_jaccard,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value,,asthma_jaccard,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value
+,"upf_high, 0","upf_high, 1",267,999,1.170047521,0.126,0.1512,,,"upf_high, 0","upf_high, 1",267,999,1.068400241,0.247,0.247
+,"upf_high, 0","upf_low, 0",273,999,3.430566071,0.001,0.002,,,"upf_high, 0","upf_low, 0",365,999,4.784952016,0.001,0.003
+,"upf_high, 0","upf_low, 1",177,999,1.630922812,0.007,0.0105,,,"upf_high, 0","upf_low, 1",241,999,1.345104959,0.047,0.0876
+,"upf_high, 1","upf_low, 0",238,999,4.863531688,0.001,0.002,,,"upf_high, 1","upf_low, 0",174,999,3.368698178,0.001,0.003
+,"upf_high, 1","upf_low, 1",142,999,2.035741577,0.001,0.002,,,"upf_high, 1","upf_low, 1",50,999,1.270753011,0.07,0.0876
+,"upf_low, 0","upf_low, 1",148,999,1.023121458,0.37,0.37,,,"upf_low, 0","upf_low, 1",148,999,1.2458017,0.073,0.0876
+allergies_unweighted_unifrac,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value,,asthma_unweighted_unifrac,Group 1,Group 2,Sample size,Permutations,pseudo-F,p-value,q-value
+,"upf_high, 0","upf_high, 1",267,999,1.524106577,0.06,0.072,,,"upf_high, 0","upf_high, 1",267,999,1.296222244,0.124,0.124
+,"upf_high, 0","upf_low, 0",273,999,3.837238822,0.001,0.002,,,"upf_high, 0","upf_low, 0",365,999,5.991544559,0.001,0.003
+,"upf_high, 0","upf_low, 1",177,999,1.652938314,0.033,0.0495,,,"upf_high, 0","upf_low, 1",241,999,1.851217134,0.018,0.027
+,"upf_high, 1","upf_low, 0",238,999,6.800574095,0.001,0.002,,,"upf_high, 1","upf_low, 0",174,999,4.613793074,0.001,0.003
+,"upf_high, 1","upf_low, 1",142,999,2.409202893,0.001,0.002,,,"upf_high, 1","upf_low, 1",50,999,1.340623864,0.116,0.124
+,"upf_low, 0","upf_low, 1",148,999,1.086099479,0.32,0.32,,,"upf_low, 0","upf_low, 1",148,999,1.982742399,0.01,0.02
+,,,,,,,,,,,,,,,,
