@@ -1,0 +1,169 @@
+
+library(tidyverse) # For all your basic data wrangling and plotting needs.
+library(phyloseq) # Indispensable package for microbiome analyses. 
+library(ggpubr)
+library(randomcoloR)
+
+set.seed(711)
+
+#Load your phyloseq objec
+load("upf_phyloseq_final_high.RData")
+
+# See how our sequencing depth looks
+hist(sample_sums(upf_phyloseq_final_high),breaks = 30) 
+hist(log10(sample_sums(upf_phyloseq_final_high)),breaks = 30) 
+
+
+#The phyloseq object is automatically created at the OTU level (distinct DNA sequences), which is not very informative. Let's aggregate the data to the Family level for our analysis.
+family = tax_glom(upf_phyloseq_final_high,'Family')
+ntaxa(upf_phyloseq_final_high); ntaxa(family) # Far fewer bugs to test!
+
+#### Optional filtering - Abundance
+# First you define a function designed to work on a vector. For each x in the input vector, x will be divided by the sum of all x's in the vector.
+calculate_relative_abundance <- function(x) x / sum(x)
+
+# We'll only include things that are at least 0.1% abundant (0.001) across all samples
+total_counts <- taxa_sums(family) # Total sum for that taxa
+relative_abundance <- calculate_relative_abundance(total_counts) # overall proportion of each bug
+abundant <- relative_abundance > 0.001 # is each bug above the threshold? TRUE if so.
+family <- prune_taxa(abundant, family) # Take only bugs above threshold
+family
+
+# Differential Abundance Tools
+## ANCOM-BC
+```{r run ANCOM-BC}
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("ANCOMBC")
+library(ANCOMBC)
+
+# Input 
+ancom.family = ancombc(phyloseq = family, # Raw counts
+                       formula = 'asthma', # The explanatory variable
+                       p_adj_method = "fdr",
+                       prv_cut=0.10, # Max proportion of zeros allowed per taxon//#get rid of high # of 0s
+                       lib_cut = 1000, # Can filter out samples below minimum seq depth here
+                       group = 'asthma', # If you're including structural zeros below, you need this
+                       struc_zero = T) # If true, any taxa present in only 1 category of 'group' will automatically be significant
+str(ancom.family)
+View(ancom.family)
+
+#results = format_ancom_results(ancom.family,family,level_letter = 'f')
+```
+
+# ALDEx2
+install.packages("BiocManager")
+BiocManager::install("ALDEx2")
+library(ALDEx2)
+set.seed(421)
+s = family@sam_data %>% as.matrix() %>% as.data.frame()
+m = model.matrix(~ asthma, data = s)
+o = family@otu_table %>% as.matrix() %>% as.data.frame()
+
+#o = o[2:nrow(o),] %>% dplyr::select(all_of(rownames(m)))
+
+x = aldex.clr(o,m,mc.samples=128)
+df = aldex.glm(x)
+
+Now that we've successfully run ANCOM-BC, let's extract the adjusted count tables (adjusted for sampling bias) and put all the results into one table.
+
+#Concatenate results}
+# First we need to update the column names for each part of the results, because they're currently all the same.
+colnames(ancom.family$res$lfc) = paste(colnames(ancom.family$res$lfc),'_beta',sep='')
+colnames(ancom.family$res$se) = paste(colnames(ancom.family$res$se),'_se',sep='')
+colnames(ancom.family$res$W) = paste(colnames(ancom.family$res$W),'_W',sep='')
+colnames(ancom.family$res$p_val) = paste(colnames(ancom.family$res$p_val),'_p_val',sep='')
+colnames(ancom.family$res$q_val) = paste(colnames(ancom.family$res$q_val),'_q_val',sep='')
+colnames(ancom.family$res$diff_abn) = paste(colnames(ancom.family$res$diff_abn),'_diff_abn',sep='')
+
+# First, we'll use lapply to apply a function to each item in a list.For each item, the row names will be converted into a column called 'OTU'.We then convert to a tibble (similar to a data frame, but with more flexibility) Finally, we use reduce to collapse the list into a single table using full_join.Full_join will combine the tables by any shared columns (OTU, in this case) without accidentally removing any data.
+results = lapply(ancom.family$res,function(x) rownames_to_column(x,'Family')) %>% 
+  lapply(as_tibble) %>% reduce(full_join)
+
+# Let's also get rid of the (Intercept) terms - they're not useful.
+results = results %>% dplyr::select(-contains('Intercept'))
+
+# Let's also get rid of the prefix 'Fractionpos_', because it annoys me
+# This allows it to work on every value in a vector, rather than 1 value at a time
+srv = Vectorize(str_remove) 
+colnames(results) = srv(colnames(results),'asthma1_') # Removes the first instance per value
+head(results)
+
+# Plotting the results
+# These are the significant taxa that we care about:
+results.sig = results %>% filter(q_val<0.05) 
+# q_val = FDR-adjusted pval
+hits = results.sig$Family 
+hits = as.numeric(hits)
+tax_table(family)
+
+
+#DOWNLOADING MICROBIOME FROM GITHUB!
+#install.packages("devtools")
+#devtools::install_github("microbiome/microbiome")
+library(microbiome)
+# Transform for relative abundance
+family_tss = family %>% transform('compositional')
+# AFTER transformation, select only the taxa of interest
+selected_taxa <- taxa_names(family)[hits]
+family_tss <- prune_taxa(selected_taxa, family_tss)
+# Extract data into data frame
+family_tss_melt <- psmelt(family_tss)
+head(family_tss_melt)
+bug = unique(family_tss_melt$Family)
+# This dataframe is super long - let's pivot it so that each microbe gets its own column.
+# Note that sometimes you get an error saying that there is more than one value per row - this happens when bugs have the same family name, but belong to different taxonomic lineages. The best workaround is to add Order information to the Family column if this happens so that they can be differentiated. This commonly occurs when the family level isn't properly annotated by the software and is left as 'f__'.
+family_tss_melt <- family_tss_melt %>%
+  select(OTU, Domain, Phylum, Class, Order, Family, everything()) %>%
+  pivot_wider(names_from = Family, values_from = Abundance)
+# We'll use ggplot2 to make our plots. I don't want to write out 8 different plots and modify them individually, so I'm going to use a for loop here:
+for(b in bug){
+  #b = bug[1]
+  
+#Just makes the column Fraction to uppercase
+  p = family_tss_melt %>% 
+    mutate(Asthma = str_to_title(asthma))
+  
+#generate random colors!
+  colors = c(randomColor(1), randomColor(1))
+  
+  ggplot(p,aes(x = asthma, y = p[[b]],fill=Asthma)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(height = 0, width = 0.2) +
+    theme_classic(base_size = 16) +
+    theme(legend.position='none') +
+    scale_fill_manual(values = colors) +
+#Add the Padj (q) value from ANCOM-BC in Powerpoint, or hard code it in here
+    xlab('asthma') + ylab(paste(b,'(% Ab.)',sep=' '))
+  print(p)
+  # ggsave saves the last-generated plot
+  ggsave(paste('Plots/tss_',b,'.jpeg',sep=''),height = 5,width = 5)
+}
+
+
+
+
+
+# Saving your results
+
+We've already saved our plots, but we'll save a few more items:
+- The entire ANCOM-BC output, just for fun
+- Our results table
+
+Any object in R can be saved as an .rds file. It's very handy for things like this. I often use it to save carefully-formatted phyloseq objects and similar, as it's easier and safer than re-running the formatting code every time.
+
+
+# Save ANCOM results as a whole:
+saveRDS(ancom.family,'ancom_results_family.rds')
+# ancom.family = readRDS('ancom_results_family.rds') # to load .rds files
+
+# Save your formatted results table as a .csv
+write.csv(results.formatted,'ancom_results_family.csv',row.names = F) 
+# We don't have any row names assigned, so it would have just created an irrelevant column of increasing numbers
+
+# Save your formatted results table as an excel spreadsheet, where the significant results are on a separate sheet
+library(writexl)
+write_xlsx(list('all_results' = results,'sig_results' = results.sig),
+           'ancom_results_family.xlsx')
+
+
