@@ -12,7 +12,6 @@ library(ggVennDiagram)
 
 #### Load data #### need the unrarefied (final) phyloseq object
 load("R_Code/upf_phyloseq_final_high.RData")
-load("R_Code/upf_phyloseq_final_low.RData")
 
 #### "core" microbiome ####
 
@@ -59,6 +58,6 @@ library("sf")
 # Create a Venn diagram using all the ASVs shared and unique to asthma and non-asthma
 high_venn <- ggVennDiagram(x = upf_high_asthma_list_full, label_alpha = 0.5,
   label_size = 3,        
-  edge_size = 0.5) + coord_cartesian(clip = "off") + coord_fixed(ratio = 0.6)
+  edge_size = 0.5) + coord_cartesian(clip = "off") + coord_fixed(ratio = 0.55)
 
 ggsave("R_files/venn_asthma_high_upf.png", plot = high_venn, width = 12, height = 7, dpi = 300)
