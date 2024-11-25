@@ -11,7 +11,6 @@ library(microbiome)
 library(ggVennDiagram)
 
 #### Load data #### need the unrarefied (final) phyloseq object
-load("R_Code/upf_phyloseq_final_high.RData")
 load("R_Code/upf_phyloseq_final_low.RData")
 
 #### "core" microbiome ####
@@ -20,8 +19,8 @@ load("R_Code/upf_phyloseq_final_low.RData")
 upf_low_RA <- transform_sample_counts(upf_phyloseq_final_low, fun=function(x) x/sum(x))
 
 # Filter dataset by asthma
-upf_low_asthma <- subset_samples(upf_high_RA, `asthma`==1)
-upf_low_noasthma <- subset_samples(upf_high_RA, `asthma`==0)
+upf_low_asthma <- subset_samples(upf_low_RA, `asthma`==1)
+upf_low_noasthma <- subset_samples(upf_low_RA, `asthma`==0)
 
 # What ASVs are found in more than 70% of samples in each antibiotic usage category?
 # trying changing the prevalence to see what happens
@@ -59,6 +58,6 @@ library("sf")
 # Create a Venn diagram using all the ASVs shared and unique to asthma and non-asthma
 low_venn <- ggVennDiagram(x = upf_low_asthma_list_full, label_alpha = 0.5,
                            label_size = 3,        
-                           edge_size = 0.5) + coord_cartesian(clip = "off") + coord_fixed(ratio = 0.5)
+                           edge_size = 0.5) + coord_cartesian(clip = "off") + coord_fixed(ratio = 0.55)
 
 ggsave("R_files/venn_asthma_low_upf.png", plot = low_venn, width = 12, height = 7, dpi = 300)
