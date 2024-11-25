@@ -42,3 +42,7 @@ Yna <br>
 Chaeyoon <br>
 - ran PERMANOVA with the beta diversity metrics (weighted unifrac, bray-curtis, jaccard) and tabulated results
 
+**November 17** <br>
+Yna <br>
+- updated PCoA plot for weighted unifrac
+- generated alpha diversity metrics
