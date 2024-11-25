@@ -46,3 +46,7 @@ Chaeyoon <br>
 Yna <br>
 - updated PCoA plot for weighted unifrac
 - generated alpha diversity metrics
+
+**November 22** <br>
+Julia <br>
+- generated phyloseq objects of upf_high / upf_low groups
