@@ -50,3 +50,8 @@ Yna <br>
 **November 22** <br>
 Julia <br>
 - generated phyloseq objects of upf_high / upf_low groups
+
+**November 24** <br>
+Chaeyoon <br>
+- ran core microbiome analysis and generated venn diagrams for high and low upf groups
+- ran ancom on low upf group
