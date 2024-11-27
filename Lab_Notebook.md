@@ -55,3 +55,7 @@ Julia <br>
 Chaeyoon <br>
 - ran core microbiome analysis and generated venn diagrams for high and low upf groups
 - ran ancom on low upf group
+
+**November 26** <br>
+Julia <br>
+- merged alpha diversity plots by placing them on the same panel for the manuscript figure
