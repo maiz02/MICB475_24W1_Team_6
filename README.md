@@ -13,7 +13,7 @@ https://docs.google.com/document/d/1Rz8cJPVH6HkvqzbCbbIUKSmT2n3V2TV_GVrX2Hr1f3c/
 7) [October 28](/Meeting_Minutes/October_28.md)
 8) [November 4](/Meeting_Minutes/November_4.md)
 9) [November 18](/Meeting_Minutes/November_18.md)
-9) [November 18](/Meeting_Minutes/November_25.md)
+9) [November 25](/Meeting_Minutes/November_25.md)
 
 ## [Lab Notebook](/Lab_Notebook.md) ##
 

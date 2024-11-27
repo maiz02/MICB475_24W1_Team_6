@@ -1,4 +1,4 @@
-# November 18 - 9th meeting
+# November 25 - 10th meeting
 
 ## Attendees
 - Julia Jung
