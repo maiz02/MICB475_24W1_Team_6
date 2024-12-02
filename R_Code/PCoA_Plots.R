@@ -3,6 +3,7 @@ library(ape)
 library(tidyverse)
 
 load("R_Files/ms_rare.RData")
+set.seed(500)
 
 #### BRAY-CURTIS ####
 # bray-curtis for asthma
@@ -16,7 +17,11 @@ bc_asthma_pcoa
 updated_bc_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_bc, shape = "upf_status", color = "asthma_yn") +
   labs(col = "Presence of asthma", pch = "UPF Status") + 
   stat_ellipse(aes(group = asthma_yn, color = asthma_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
-  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+  guides(shape = guide_legend(override.aes = list(linetype = 0))) + 
+  scale_shape_manual(values = c(16, 17),
+                     labels = c("High UPF", "Low UPF")) + 
+  scale_color_manual(values = c("#F8766D", "#00BFC4"),  
+                     labels = c("No asthma", "Asthma")) 
 updated_bc_asthma_pcoa
 
 # bray-curtis for allergies
@@ -30,7 +35,11 @@ bc_allergies_pcoa
 updated_bc_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_bc, shape = "upf_status", color = "allergies_yn") +
   labs(col = "Presence of allergies", pch = "UPF Status") + 
   stat_ellipse(aes(group = allergies_yn, color = allergies_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
-  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+  guides(shape = guide_legend(override.aes = list(linetype = 0))) + 
+  scale_shape_manual(values = c(16, 17),
+                     labels = c("High UPF", "Low UPF")) + 
+  scale_color_manual(values = c("#F8766D", "#00BFC4"),  
+                     labels = c("No asthma", "Asthma")) 
 updated_bc_allergies_pcoa
 
 # bray-curtis for both
@@ -67,7 +76,11 @@ jaccard_asthma_pcoa
 updated_jaccard_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_jaccard, shape = "upf_status", color = "asthma_yn") +
   labs(col = "Presence of asthma", pch = "UPF Status") + 
   stat_ellipse(aes(group = asthma_yn, color = asthma_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
-  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+  guides(shape = guide_legend(override.aes = list(linetype = 0))) + 
+  scale_shape_manual(values = c(16, 17),
+                     labels = c("High UPF", "Low UPF")) + 
+  scale_color_manual(values = c("#F8766D", "#00BFC4"),  
+                     labels = c("No asthma", "Asthma")) 
 updated_jaccard_asthma_pcoa
 
 # jaccard for allergies
@@ -81,7 +94,11 @@ jaccard_allergies_pcoa
 updated_jaccard_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_jaccard, shape = "upf_status", color = "allergies_yn") +
   labs(col = "Presence of allergies", pch = "UPF Status") + 
   stat_ellipse(aes(group = allergies_yn, color = allergies_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
-  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+  guides(shape = guide_legend(override.aes = list(linetype = 0))) + 
+  scale_shape_manual(values = c(16, 17),
+                     labels = c("High UPF", "Low UPF")) + 
+  scale_color_manual(values = c("#F8766D", "#00BFC4"),  
+                     labels = c("No asthma", "Asthma")) 
 updated_jaccard_allergies_pcoa
 
 # jaccard for both
@@ -155,7 +172,12 @@ wuni_asthma_pcoa
 updated_wuni_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_wuni, shape = "upf_status", color = "asthma_yn") +
   labs(col = "Presence of asthma", pch = "UPF Status") + 
   stat_ellipse(aes(group = asthma_yn, color = asthma_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
-  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+  guides(shape = guide_legend(override.aes = list(linetype = 0))) + 
+  scale_shape_manual(values = c(16, 17),
+                     labels = c("High UPF", "Low UPF")) + 
+  scale_color_manual(values = c("#F8766D", "#00BFC4"),  
+                     labels = c("No asthma", "Asthma")) +
+  xlim(-0.1, 0.05) + ylim(-0.050, 0.015)
 updated_wuni_asthma_pcoa
 
 # weighted unifrac for allergies
@@ -169,7 +191,12 @@ wuni_allergies_pcoa
 updated_wuni_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_wuni, shape = "upf_status", color = "allergies_yn") +
   labs(col = "Presence of allergies", pch = "UPF Status") + 
   stat_ellipse(aes(group = allergies_yn, color = allergies_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
-  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+  guides(shape = guide_legend(override.aes = list(linetype = 0))) + 
+  scale_shape_manual(values = c(16, 17),
+                     labels = c("High UPF", "Low UPF")) + 
+  scale_color_manual(values = c("#F8766D", "#00BFC4"),  
+                     labels = c("No asthma", "Asthma")) +
+  xlim(-0.1, 0.05) + ylim(-0.050, 0.015)
 updated_wuni_allergies_pcoa
 
 # weighted unifrac for both
