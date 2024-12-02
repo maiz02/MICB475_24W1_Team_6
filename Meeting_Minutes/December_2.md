@@ -60,6 +60,7 @@ From the slides:
 - lit review of ancom results would be what we could talk about in discussion
 - no high upf ancom data for presentation
 - data for presentation: permanova table (beta diversity) (2 tables, 1 with the separate (upf, asthma, allegies) 1 with the combined) and the takeaways as titles, 1 alpha diversity metric (shannon), venn diagrams, low upf ancom plots
+- how we're marked: confidently describing results and knowing what they mean. for our own presentation, the graphs are very important, when people are presenting data if they end up with different conclusions we're docked marks
   
 ## Action Items
 - lots of formatting and trimming to do
