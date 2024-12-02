@@ -39,7 +39,7 @@ updated_bc_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_bc, shape =
   scale_shape_manual(values = c(16, 17),
                      labels = c("High UPF", "Low UPF")) + 
   scale_color_manual(values = c("#F8766D", "#00BFC4"),  
-                     labels = c("No asthma", "Asthma")) 
+                     labels = c("No allergies", "Allergies")) 
 updated_bc_allergies_pcoa
 
 # bray-curtis for both
@@ -98,7 +98,7 @@ updated_jaccard_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_jaccar
   scale_shape_manual(values = c(16, 17),
                      labels = c("High UPF", "Low UPF")) + 
   scale_color_manual(values = c("#F8766D", "#00BFC4"),  
-                     labels = c("No asthma", "Asthma")) 
+                     labels = c("No allergies", "Allergies")) 
 updated_jaccard_allergies_pcoa
 
 # jaccard for both
@@ -195,7 +195,7 @@ updated_wuni_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_wuni, sha
   scale_shape_manual(values = c(16, 17),
                      labels = c("High UPF", "Low UPF")) + 
   scale_color_manual(values = c("#F8766D", "#00BFC4"),  
-                     labels = c("No asthma", "Asthma")) +
+                     labels = c("No allergies", "Allergies")) +
   xlim(-0.1, 0.05) + ylim(-0.050, 0.015)
 updated_wuni_allergies_pcoa
 
