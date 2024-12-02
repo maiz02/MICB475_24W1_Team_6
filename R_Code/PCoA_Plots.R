@@ -12,12 +12,26 @@ bc_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_bc, color = "upf_status",
   labs(pch = "Presence of asthma", col="UPF Status")
 bc_asthma_pcoa
 
+# updated bray-curtis for asthma
+updated_bc_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_bc, shape = "upf_status", color = "asthma_yn") +
+  labs(col = "Presence of asthma", pch = "UPF Status") + 
+  stat_ellipse(aes(group = asthma_yn, color = asthma_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
+  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+updated_bc_asthma_pcoa
+
 # bray-curtis for allergies
 bc_allergies_dm <- distance(ms_rare, method="bray")
 pcoa_allergies_bc <- ordinate(ms_rare, method="PCoA", distance=bc_allergies_dm)
 bc_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_bc, color = "upf_status", shape = "allergies_yn") +
   labs(pch = "Presence of allergies", col="UPF Status")
 bc_allergies_pcoa
+
+# updated bray-curtis for allergies
+updated_bc_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_bc, shape = "upf_status", color = "allergies_yn") +
+  labs(col = "Presence of allergies", pch = "UPF Status") + 
+  stat_ellipse(aes(group = allergies_yn, color = allergies_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
+  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+updated_bc_allergies_pcoa
 
 # bray-curtis for both
 bc_both_dm <- distance(ms_rare, method="bray")
@@ -49,12 +63,26 @@ jaccard_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_jaccard, color = "up
   labs(pch = "Presence of asthma", col="UPF Status")
 jaccard_asthma_pcoa
 
+# updated jaccard for asthma
+updated_jaccard_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_jaccard, shape = "upf_status", color = "asthma_yn") +
+  labs(col = "Presence of asthma", pch = "UPF Status") + 
+  stat_ellipse(aes(group = asthma_yn, color = asthma_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
+  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+updated_jaccard_asthma_pcoa
+
 # jaccard for allergies
 jaccard_allergies_dm <- distance(ms_rare, method="jaccard")
 pcoa_allergies_jaccard <- ordinate(ms_rare, method="PCoA", distance=jaccard_allergies_dm)
 jaccard_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_jaccard, color = "upf_status", shape = "allergies_yn") +
   labs(pch = "Presence of allergies", col="UPF Status")
 jaccard_allergies_pcoa
+
+# updated jaccard for allergies
+updated_jaccard_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_jaccard, shape = "upf_status", color = "allergies_yn") +
+  labs(col = "Presence of allergies", pch = "UPF Status") + 
+  stat_ellipse(aes(group = allergies_yn, color = allergies_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
+  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+updated_jaccard_allergies_pcoa
 
 # jaccard for both
 jaccard_both_dm <- distance(ms_rare, method="jaccard")
@@ -123,12 +151,26 @@ wuni_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_wuni, color = "upf_stat
   labs(pch = "Presence of asthma", col="UPF Status")
 wuni_asthma_pcoa
 
+# updated wuni for asthma
+updated_wuni_asthma_pcoa <- plot_ordination(ms_rare, pcoa_asthma_wuni, shape = "upf_status", color = "asthma_yn") +
+  labs(col = "Presence of asthma", pch = "UPF Status") + 
+  stat_ellipse(aes(group = asthma_yn, color = asthma_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
+  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+updated_wuni_asthma_pcoa
+
 # weighted unifrac for allergies
 wuni_allergies_dm <- distance(ms_rare, method="wunifrac")
 pcoa_allergies_wuni <- ordinate(ms_rare, method="PCoA", distance=wuni_allergies_dm)
 wuni_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_wuni, color = "upf_status", shape = "allergies_yn") +
   labs(pch = "Presence of allergies", col="UPF Status")
 wuni_allergies_pcoa
+
+# updated wuni for allergies
+updated_wuni_allergies_pcoa <- plot_ordination(ms_rare, pcoa_allergies_wuni, shape = "upf_status", color = "allergies_yn") +
+  labs(col = "Presence of allergies", pch = "UPF Status") + 
+  stat_ellipse(aes(group = allergies_yn, color = allergies_yn), level = 0.95, linewidth = 0.8, show.legend = TRUE) + 
+  guides(shape = guide_legend(override.aes = list(linetype = 0)))
+updated_wuni_allergies_pcoa
 
 # weighted unifrac for both
 wuni_both_dm <- distance(ms_rare, method="wunifrac")
@@ -264,4 +306,28 @@ ggsave("R_files/wuni_both_pcoa.png",
 
 ggsave("R_files/updated_wuni_both_pcoa.png",
        updated_wuni_both_pcoa,
+       height=4, width=5)
+
+ggsave("R_files/updated_bc_asthma_pcoa.png",
+       updated_bc_asthma_pcoa,
+       height=4, width=5)
+
+ggsave("R_files/updated_bc_allergies_pcoa.png",
+       updated_bc_allergies_pcoa,
+       height=4, width=5)
+
+ggsave("R_files/updated_jaccard_asthma_pcoa.png",
+       updated_jaccard_asthma_pcoa,
+       height=4, width=5)
+
+ggsave("R_files/updated_jaccard_allergies_pcoa.png",
+       updated_jaccard_allergies_pcoa,
+       height=4, width=5)
+
+ggsave("R_files/updated_wuni_asthma_pcoa.png",
+       updated_wuni_asthma_pcoa,
+       height=4, width=5)
+
+ggsave("R_files/updated_wuni_allergies_pcoa.png",
+       updated_wuni_allergies_pcoa,
        height=4, width=5)
