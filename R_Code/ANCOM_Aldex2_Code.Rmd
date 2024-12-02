@@ -134,7 +134,8 @@ for(b in bug){
     theme(legend.position='none') +
     scale_fill_manual(values = colors) +
 #Add the Padj (q) value from ANCOM-BC in Powerpoint, or hard code it in here
-    xlab('asthma') + ylab(paste(b,'(% Ab.)',sep=' '))
+    xlab('asthma') + ylab(paste(b,'(% Ab.)',sep=' ')) +
+ scale_y_continuous(trans = 'log10')
   print(p)
   # ggsave saves the last-generated plot
   ggsave(paste('Plots/tss_',b,'.jpeg',sep=''),height = 5,width = 5)
