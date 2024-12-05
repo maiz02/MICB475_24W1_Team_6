@@ -7,70 +7,66 @@ library(dplyr)
 
 set.seed(711)
 
-#Load your phyloseq objec
+#Load phyloseq
 load("R_Code/upf_phyloseq_final_low.RData")
 
-# See how our sequencing depth looks
+#clean it up
 hist(sample_sums(upf_phyloseq_final_low),breaks = 30) 
 hist(log10(sample_sums(upf_phyloseq_final_low)),breaks = 30) 
 
+table(below_1000 = sample_sums(upf_phyloseq_final_low)<=1000,
+      expt = upf_phyloseq_final_low@sam_data$asthma_yn) 
 
-#The phyloseq object is automatically created at the OTU level (distinct DNA sequences), which is not very informative. Let's aggregate the data to the Family level for our analysis.
+upf_phyloseq_final_low = prune_samples(sample_sums(upf_phyloseq_final_low) >= 1000, upf_phyloseq_final_low)
+
+table(below_1000 = sample_sums(upf_phyloseq_final_low)<=1000,
+      expt = upf_phyloseq_final_low@sam_data$asthma_yn) 
+
+#aggregate the data to the Family level for our analysis.
 family = tax_glom(upf_phyloseq_final_low,'Family')
-ntaxa(upf_phyloseq_final_low); ntaxa(family) # Far fewer bugs to test!
+ntaxa(upf_phyloseq_final_low); ntaxa(family) 
 #[1] 2056
 #[1] 82
 
-#### Optional filtering - Abundance
-# First you define a function designed to work on a vector. For each x in the input vector, x will be divided by the sum of all x's in the vector.
+
 calculate_relative_abundance <- function(x) x / sum(x)
+total_counts <- taxa_sums(family)
+relative_abundance <- calculate_relative_abundance(total_counts) 
+abundant <- relative_abundance > 0.001 
+family <- prune_taxa(abundant, family) 
+family 
 
-# We'll only include things that are at least 0.1% abundant (0.001) across all samples
-total_counts <- taxa_sums(family) # Total sum for that taxa
-relative_abundance <- calculate_relative_abundance(total_counts) # overall proportion of each bug
-abundant <- relative_abundance > 0.001 # is each bug above the threshold? TRUE if so.
-family <- prune_taxa(abundant, family) # Take only bugs above threshold
-family
-
-# Differential Abundance Tools
-## ANCOM-BC
+#ANCOM
 if (!requireNamespace("BiocManager", quietly=TRUE))
-  install.packages("BiocManager")
+    install.packages("BiocManager")
 BiocManager::install("ANCOMBC")
 library(ANCOMBC)
 
 # Input 
 ancom.family = ancombc(phyloseq = family, # Raw counts
-                       formula = 'asthma', # The explanatory variable
+                       formula = 'asthma_yn', # The explanatory variable
                        p_adj_method = "fdr",
-                       prv_cut=0.10, # Max proportion of zeros allowed per taxon//#get rid of high # of 0s
+                       prv_cut=0.10, # Max proportion of zeros allowed per taxon
                        lib_cut = 1000, # Can filter out samples below minimum seq depth here
-                       group = 'asthma', # If you're including structural zeros below, you need this
+                       group = 'asthma_yn', # If you're including structural zeros below, you need thisaa
                        struc_zero = T) # If true, any taxa present in only 1 category of 'group' will automatically be significant
 str(ancom.family)
 View(ancom.family)
-
 #results = format_ancom_results(ancom.family,family,level_letter = 'f')
-```
+
 
 # ALDEx2
-install.packages("BiocManager")
-BiocManager::install("ALDEx2")
 library(ALDEx2)
 set.seed(421)
 s = family@sam_data %>% as.matrix() %>% as.data.frame()
-m = model.matrix(~ asthma, data = s)
+m = model.matrix(~ asthma_yn, data = s)
 o = family@otu_table %>% as.matrix() %>% as.data.frame()
-
-#o = o[2:nrow(o),] %>% dplyr::select(all_of(rownames(m)))
-
+o = o[2:nrow(o),] %>% dplyr::select(all_of(rownames(m)))
 x = aldex.clr(o,m,mc.samples=128)
 df = aldex.glm(x)
 
-#Now that we've successfully run ANCOM-BC, let's extract the adjusted count tables (adjusted for sampling bias) and put all the results into one table.
 
-#Concatenate results}
-# First we need to update the column names for each part of the results, because they're currently all the same.
+# Update the column names for each part of the results, because they're currently all the same.
 colnames(ancom.family$res$lfc) = paste(colnames(ancom.family$res$lfc),'_beta',sep='')
 colnames(ancom.family$res$se) = paste(colnames(ancom.family$res$se),'_se',sep='')
 colnames(ancom.family$res$W) = paste(colnames(ancom.family$res$W),'_W',sep='')
@@ -78,17 +74,11 @@ colnames(ancom.family$res$p_val) = paste(colnames(ancom.family$res$p_val),'_p_va
 colnames(ancom.family$res$q_val) = paste(colnames(ancom.family$res$q_val),'_q_val',sep='')
 colnames(ancom.family$res$diff_abn) = paste(colnames(ancom.family$res$diff_abn),'_diff_abn',sep='')
 
-# First, we'll use lapply to apply a function to each item in a list.For each item, the row names will be converted into a column called 'OTU'.We then convert to a tibble (similar to a data frame, but with more flexibility) Finally, we use reduce to collapse the list into a single table using full_join.Full_join will combine the tables by any shared columns (OTU, in this case) without accidentally removing any data.
 results = lapply(ancom.family$res,function(x) rownames_to_column(x,'Family')) %>% 
   lapply(as_tibble) %>% reduce(full_join)
-
-# Let's also get rid of the (Intercept) terms - they're not useful.
 results = results %>% dplyr::select(-contains('Intercept'))
-
-# Let's also get rid of the prefix 'Fractionpos_', because it annoys me
-# This allows it to work on every value in a vector, rather than 1 value at a time
 srv = Vectorize(str_remove) 
-colnames(results) = srv(colnames(results),'asthma1_') # Removes the first instance per value
+colnames(results) = srv(colnames(results),'asthma_ynyes_') 
 head(results)
 
 # Plotting the results
@@ -100,51 +90,56 @@ hits = as.numeric(hits)
 tax_table(family)
 
 
-#DOWNLOADING MICROBIOME FROM GITHUB!
-#install.packages("devtools")
-#devtools::install_github("microbiome/microbiome")
+results.sig = results %>% filter(q_val<0.05) # q_val = FDR-adjusted pval
+hits = result$taxon_beta # 2 hits, cool!
+hits = as.numeric(hits)
 library(microbiome)
-# Transform for relative abundance
 family_tss = family %>% transform('compositional')
-# AFTER transformation, select only the taxa of interest
-selected_taxa <- taxa_names(family)[hits]
+selected_taxa <- taxa_names(family)
 family_tss <- prune_taxa(selected_taxa, family_tss)
-# Extract data into data frame
-family_tss_melt <- psmelt(family_tss)
-head(family_tss_melt)
-bug = unique(family_tss_melt$Family)
-# This dataframe is super long - let's pivot it so that each microbe gets its own column.
-# Note that sometimes you get an error saying that there is more than one value per row - this happens when bugs have the same family name, 
-#but belong to different taxonomic lineages. The best workaround is to add Order information to the Family column if this happens so that they can be differentiated. 
-#This commonly occurs when the family level isn't properly annotated by the software and is left as 'f__'.
-family_tss_melt <- family_tss_melt %>%
-  dplyr::select(OTU, Domain, Phylum, Class, Order, Family, everything()) %>%
+family_tss_melt = family_tss %>% psmelt()
+
+family_tss_melt = family_tss_melt %>% 
+  dplyr::select(-c(OTU,Domain:Order)) %>%
   pivot_wider(names_from = Family, values_from = Abundance)
 
-# We'll use ggplot2 to make our plots. I don't want to write out 8 different plots and modify them individually, so I'm going to use a for loop here:
-for(b in bug){
-  #b = bug[1]
+                 
+                 
+                 
+bug = "f__Butyricicoccaceae"
+for (b in bug) {
+  # Check if the column exists
+  if (!b %in% colnames(family_tss_melt)) {
+    warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
+    next
+  }
   
-  #Just makes the column Fraction to uppercase
-  p = family_tss_melt %>% 
-    mutate(Asthma = str_to_title(asthma))
-  
-  #generate random colors!
-  colors = c(randomColor(1), randomColor(1))
-  
-  ggplot(p,aes(x = asthma, y = p[[b]],fill=Asthma)) +
+  # Check if the column is numeric
+  if (!is.numeric(family_tss_melt[[b]])) {
+    family_tss_melt[[b]] <- as.numeric(family_tss_melt[[b]])
+    if (anyNA(family_tss_melt[[b]])) {
+      warning(paste("Column", b, "contains non-convertible values. Skipping."))
+      next
+    }
+  }
+
+  # Generate random colors
+  colors <- c(randomColor(1), randomColor(1))
+
+  # Create the plot
+  p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
     geom_boxplot(outlier.shape = NA) +
     geom_jitter(height = 0, width = 0.2) +
     theme_classic(base_size = 16) +
-    theme(legend.position='none') +
+    theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
-    #Add the Padj (q) value from ANCOM-BC in Powerpoint, or hard code it in here
-    xlab('asthma') + ylab(paste(b,'(% Ab.)',sep=' '))
+    xlab("Presence of Asthma") +
+    ylab("Butyricicoccaceae (% Ab)") +
+    scale_y_continuous(trans = 'log10')
+  # Save the plot
   print(p)
-  # ggsave saves the last-generated plot
-  ggsave(paste('R_Files/ANCOM/low_upf_tss_',b,'.jpeg',sep=''),height = 5,width = 5)
+  ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
 }
-
 
 
 # Saving your results
