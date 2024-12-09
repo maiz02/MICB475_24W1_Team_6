@@ -3,30 +3,27 @@ library(tidyverse) # For all your basic data wrangling and plotting needs.
 library(phyloseq) # Indispensable package for microbiome analyses. 
 library(ggpubr)
 library(randomcoloR)
-library(dplyr)
 
 set.seed(711)
 
-#Load phyloseq
-load("R_Code/upf_phyloseq_final_low.RData")
+#Load your phyloseq objec
+load("upf_phyloseq_final_high.RData")
 
 #clean it up
-hist(sample_sums(upf_phyloseq_final_low),breaks = 30) 
-hist(log10(sample_sums(upf_phyloseq_final_low)),breaks = 30) 
+hist(sample_sums(upf_phyloseq_final_high),breaks = 30) 
+hist(log10(sample_sums(upf_phyloseq_final_high)),breaks = 30) 
 
-table(below_1000 = sample_sums(upf_phyloseq_final_low)<=1000,
-      expt = upf_phyloseq_final_low@sam_data$asthma_yn) 
+table(below_1000 = sample_sums(upf_phyloseq_final_high)<=1000,
+      expt = upf_phyloseq_final_high@sam_data$asthma_yn) 
 
-upf_phyloseq_final_low = prune_samples(sample_sums(upf_phyloseq_final_low) >= 1000, upf_phyloseq_final_low)
+upf_phyloseq_final_high = prune_samples(sample_sums(upf_phyloseq_final_high) >= 1000, upf_phyloseq_final_high)
 
-table(below_1000 = sample_sums(upf_phyloseq_final_low)<=1000,
-      expt = upf_phyloseq_final_low@sam_data$asthma_yn) 
+table(below_1000 = sample_sums(upf_phyloseq_final_high)<=1000,
+      expt = upf_phyloseq_final_high@sam_data$asthma_yn) 
 
 #aggregate the data to the Family level for our analysis.
-family = tax_glom(upf_phyloseq_final_low,'Family')
-ntaxa(upf_phyloseq_final_low); ntaxa(family) 
-#[1] 2056
-#[1] 82
+family = tax_glom(upf_phyloseq_final_high,'Family')
+ntaxa(upf_phyloseq_final_high); ntaxa(family) 
 
 
 calculate_relative_abundance <- function(x) x / sum(x)
@@ -55,6 +52,7 @@ View(ancom.family)
 #results = format_ancom_results(ancom.family,family,level_letter = 'f')
 
 
+
 # ALDEx2
 library(ALDEx2)
 set.seed(421)
@@ -66,7 +64,8 @@ x = aldex.clr(o,m,mc.samples=128)
 df = aldex.glm(x)
 
 
-# Update the column names for each part of the results, because they're currently all the same.
+
+# First we need to update the column names for each part of the results, because they're currently all the same.
 colnames(ancom.family$res$lfc) = paste(colnames(ancom.family$res$lfc),'_beta',sep='')
 colnames(ancom.family$res$se) = paste(colnames(ancom.family$res$se),'_se',sep='')
 colnames(ancom.family$res$W) = paste(colnames(ancom.family$res$W),'_W',sep='')
@@ -89,7 +88,6 @@ hits = results.sig$Family
 hits = as.numeric(hits)
 tax_table(family)
 
-
 results.sig = results %>% filter(q_val<0.05) # q_val = FDR-adjusted pval
 hits = result$taxon_beta # 2 hits, cool!
 hits = as.numeric(hits)
@@ -103,10 +101,8 @@ family_tss_melt = family_tss_melt %>%
   dplyr::select(-c(OTU,Domain:Order)) %>%
   pivot_wider(names_from = Family, values_from = Abundance)
 
-                 
-                 
-                 
-bug = "f__Butyricicoccaceae"
+
+bug = "f__X"
 for (b in bug) {
   # Check if the column exists
   if (!b %in% colnames(family_tss_melt)) {
@@ -142,18 +138,21 @@ for (b in bug) {
 }
 
 
+
+
+
 # Saving your results
 
-#We've already saved our plots, but we'll save a few more items:
- # - The entire ANCOM-BC output, just for fun
-#- Our results table
+We've already saved our plots, but we'll save a few more items:
+- The entire ANCOM-BC output, just for fun
+- Our results table
 
-#Any object in R can be saved as an .rds file. It's very handy for things like this. I often use it to save carefully-formatted phyloseq objects and similar, as it's easier and safer than re-running the formatting code every time.
+Any object in R can be saved as an .rds file. It's very handy for things like this. I often use it to save carefully-formatted phyloseq objects and similar, as it's easier and safer than re-running the formatting code every time.
 
 
 # Save ANCOM results as a whole:
-saveRDS(ancom.family,'R_Files/ANCOM/low_upf_ancom_results_family.rds')
-# ancom.family = readRDS('R_Files/ANCOM/low_upf_ancom_results_family.rds') # to load .rds files
+saveRDS(ancom.family,'ancom_results_family.rds')
+# ancom.family = readRDS('ancom_results_family.rds') # to load .rds files
 
 # Save your formatted results table as a .csv
 write.csv(results.formatted,'ancom_results_family.csv',row.names = F) 
@@ -162,6 +161,6 @@ write.csv(results.formatted,'ancom_results_family.csv',row.names = F)
 # Save your formatted results table as an excel spreadsheet, where the significant results are on a separate sheet
 library(writexl)
 write_xlsx(list('all_results' = results,'sig_results' = results.sig),
-           'R_Files/ANCOM/low_upf_ancom_results_family.xlsx')
+           'ancom_results_family.xlsx')
 
 
