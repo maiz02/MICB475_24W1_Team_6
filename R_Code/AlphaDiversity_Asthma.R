@@ -119,3 +119,46 @@ samp_dat_low_wdiv <- data.frame(samp_dat_low, alphadiv_low)
 
 wilcox.test(Observed ~ asthma, data=samp_dat_low_wdiv, exact = FALSE)
 wilcox.test(Shannon ~ asthma, data=samp_dat_low_wdiv, exact = FALSE)
+
+
+#### COMBINED UPF ####
+# Load data
+load("R_Code/upf_phyloseq_rare.RData")
+
+# Plot Observed and Shannon, high vs low UPF
+gg_richness_high <- plot_richness(upf_phyloseq_rare_high, x = "upf_status", 
+                                  measures = c("Observed","Shannon")) +
+  xlab(" ") +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5))  
+gg_richness_high
+
+# Stats for combined UPF, Observed and Shannon
+alphadiv_high <- estimate_richness(upf_phyloseq_rare_high)
+samp_dat_high <- sample_data(upf_phyloseq_rare_high)
+samp_dat_high_wdiv <- data.frame(samp_dat_high, alphadiv_high)
+
+wilcox.test(Observed ~ upf_status, data=samp_dat_high_wdiv, exact = FALSE)
+wilcox.test(Shannon ~ upf_status, data=samp_dat_high_wdiv, exact = FALSE)
+
+# Plot Faith's PD, high vs low UPF
+phylo_dist_high <- pd(t(otu_table(upf_phyloseq_rare_high)), phy_tree(upf_phyloseq_rare_high),
+                      include.root=F) 
+
+sample_data(upf_phyloseq_rare_high)$PD <- phylo_dist_high$PD
+
+pd_plot_high <- ggplot(sample_data(upf_phyloseq_rare_high), aes(upf_status, PD)) + 
+  geom_point(position = position_dodge(width = 1), size = 1.5, alpha = 1) +
+  geom_boxplot() +
+  xlab(" ") +
+  ylab("Phylogenetic Diversity") +
+  theme(axis.text.x = element_text(size = 9), axis.text.y = element_text(size = 9),
+        axis.title.x = element_text(size = 11), axis.title.y = element_text(size = 11))+
+  scale_colour_manual(name="", values=c(Com = "lightgrey") )
+
+pd_plot_high<- pd_plot_high+facet_grid(. ~ "Faith's PD") +
+  theme(strip.background = element_rect(fill="lightgrey"),
+        strip.text = element_text(size=8, colour="black"))
+pd_plot_high
+
+
