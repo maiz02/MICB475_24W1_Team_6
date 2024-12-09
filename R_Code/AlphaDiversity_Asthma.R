@@ -5,6 +5,7 @@ library(tidyverse)
 library(picante)
 library(patchwork)
 library(dplyr)
+library(ape)
 
 load("R_Code/upf_phyloseq_rare_high.RData")
 load("R_Code/upf_phyloseq_rare_low.RData")
