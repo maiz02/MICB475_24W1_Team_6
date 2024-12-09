@@ -81,18 +81,6 @@ srv = Vectorize(str_remove)
 colnames(results) = srv(colnames(results),'asthma_ynyes_') 
 head(results)
 
-# Plotting the results
-# These are the significant taxa that we care about:
-results.sig = results %>% filter(q_val<0.05) 
-# q_val = FDR-adjusted pval
-hits = results.sig$Family 
-hits = as.numeric(hits)
-tax_table(family)
-
-
-results.sig = results %>% filter(q_val<0.05) # q_val = FDR-adjusted pval
-hits = result$taxon_beta # 2 hits, cool!
-hits = as.numeric(hits)
 library(microbiome)
 family_tss = family %>% transform('compositional')
 selected_taxa <- taxa_names(family)
@@ -103,9 +91,21 @@ family_tss_melt = family_tss_melt %>%
   dplyr::select(-c(OTU,Domain:Order)) %>%
   pivot_wider(names_from = Family, values_from = Abundance)
 
-                 
-                 
-                 
+# Look at which p values have less than 0.05, and match the sample ID to the one seen in tax_table(family)
+library(writexl)
+write_xlsx(list('all_results' = results),
+           'ancom_low_upf_results_family.xlsx')                
+tax_table(family)
+
+
+
+install.packages("scales")
+library(scales)
+
+
+#put bug as whichever family is significant to make each graph. 
+
+##Butyricicoccaceae
 bug = "f__Butyricicoccaceae"
 for (b in bug) {
   # Check if the column exists
@@ -123,8 +123,7 @@ for (b in bug) {
     }
   }
 
-  # Generate random colors
-  colors <- c(randomColor(1), randomColor(1))
+ colors <- c("blue", "red")
 
   # Create the plot
   p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
@@ -134,23 +133,178 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Butyricicoccaceae (% Ab)") +
-    scale_y_continuous(trans = 'log10')
+    ylab("Butyricicoccaceae (Log-transformed % Ab)") +
+    scale_y_continuous(
+      trans = 'log10', 
+      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    )
+  # Save the plot
+  print(p)
+  ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
+}
+
+#Coriobacteriaceae
+bug = "f__Coriobacteriaceae"
+for (b in bug) {
+  # Check if the column exists
+  if (!b %in% colnames(family_tss_melt)) {
+    warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
+    next
+  }
+  
+  # Check if the column is numeric
+  if (!is.numeric(family_tss_melt[[b]])) {
+    family_tss_melt[[b]] <- as.numeric(family_tss_melt[[b]])
+    if (anyNA(family_tss_melt[[b]])) {
+      warning(paste("Column", b, "contains non-convertible values. Skipping."))
+      next
+    }
+  }
+
+ colors <- c("blue", "red")
+
+  # Create the plot
+  p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(height = 0, width = 0.2) +
+    theme_classic(base_size = 16) +
+    theme(legend.position = "none") +
+    scale_fill_manual(values = colors) +
+    xlab("Presence of Asthma") +
+    ylab("Coriobacteriaceae (Log-transformed % Ab)") +
+    scale_y_continuous(
+      trans = 'log10', 
+      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    )
+  # Save the plot
+  print(p)
+  ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
+}
+
+#Erysipelatoclostridiaceae
+bug = "f__Erysipelatoclostridiaceae"
+for (b in bug) {
+  # Check if the column exists
+  if (!b %in% colnames(family_tss_melt)) {
+    warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
+    next
+  }
+  
+  # Check if the column is numeric
+  if (!is.numeric(family_tss_melt[[b]])) {
+    family_tss_melt[[b]] <- as.numeric(family_tss_melt[[b]])
+    if (anyNA(family_tss_melt[[b]])) {
+      warning(paste("Column", b, "contains non-convertible values. Skipping."))
+      next
+    }
+  }
+
+ colors <- c("blue", "red")
+
+  # Create the plot
+  p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(height = 0, width = 0.2) +
+    theme_classic(base_size = 16) +
+    theme(legend.position = "none") +
+    scale_fill_manual(values = colors) +
+    xlab("Presence of Asthma") +
+    ylab("Erysipelatoclostridiaceae (Log-transformed % Ab)") +
+    scale_y_continuous(
+      trans = 'log10', 
+      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
 }
 
 
+#Lachnospiraceae 
+bug = "f__Lachnospiraceae"
+for (b in bug) {
+  # Check if the column exists
+  if (!b %in% colnames(family_tss_melt)) {
+    warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
+    next
+  }
+  
+  # Check if the column is numeric
+  if (!is.numeric(family_tss_melt[[b]])) {
+    family_tss_melt[[b]] <- as.numeric(family_tss_melt[[b]])
+    if (anyNA(family_tss_melt[[b]])) {
+      warning(paste("Column", b, "contains non-convertible values. Skipping."))
+      next
+    }
+  }
+
+ colors <- c("blue", "red")
+
+  # Create the plot
+  p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(height = 0, width = 0.2) +
+    theme_classic(base_size = 16) +
+    theme(legend.position = "none") +
+    scale_fill_manual(values = colors) +
+    xlab("Presence of Asthma") +
+    ylab("Lachnospiraceae (Log-transformed % Ab)") +
+    scale_y_continuous(
+      trans = 'log10', 
+      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    )
+  # Save the plot
+  print(p)
+  ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
+}
+
+
+#Ruminococcaceae
+bug = "f__Ruminococcaceae"
+for (b in bug) {
+  # Check if the column exists
+  if (!b %in% colnames(family_tss_melt)) {
+    warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
+    next
+  }
+  
+  # Check if the column is numeric
+  if (!is.numeric(family_tss_melt[[b]])) {
+    family_tss_melt[[b]] <- as.numeric(family_tss_melt[[b]])
+    if (anyNA(family_tss_melt[[b]])) {
+      warning(paste("Column", b, "contains non-convertible values. Skipping."))
+      next
+    }
+  }
+
+ colors <- c("blue", "red")
+
+  # Create the plot
+  p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(height = 0, width = 0.2) +
+    theme_classic(base_size = 16) +
+    theme(legend.position = "none") +
+    scale_fill_manual(values = colors) +
+    xlab("Presence of Asthma") +
+    ylab("Ruminococcaceae (Log-transformed % Ab)") +
+    scale_y_continuous(
+      trans = 'log10', 
+      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    )
+  # Save the plot
+  print(p)
+  ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
+}
+
+
+
+
+
+
+
+
 # Saving your results
-
-#We've already saved our plots, but we'll save a few more items:
- # - The entire ANCOM-BC output, just for fun
-#- Our results table
-
-#Any object in R can be saved as an .rds file. It's very handy for things like this. I often use it to save carefully-formatted phyloseq objects and similar, as it's easier and safer than re-running the formatting code every time.
-
-
 # Save ANCOM results as a whole:
 saveRDS(ancom.family,'R_Files/ANCOM/low_upf_ancom_results_family.rds')
 # ancom.family = readRDS('R_Files/ANCOM/low_upf_ancom_results_family.rds') # to load .rds files
@@ -161,7 +315,7 @@ write.csv(results.formatted,'ancom_results_family.csv',row.names = F)
 
 # Save your formatted results table as an excel spreadsheet, where the significant results are on a separate sheet
 library(writexl)
-write_xlsx(list('all_results' = results,'sig_results' = results.sig),
+write_xlsx(list('all_results' = results),
            'R_Files/ANCOM/low_upf_ancom_results_family.xlsx')
 
 
