@@ -56,7 +56,8 @@ combined_plot <- gg_richness_high + pd_plot_high +
 ggsave(filename = "R_Files/combined_high_upf.png", 
        combined_plot, height = 4, width = 9)
 
-# Stats
+## Stats
+# Observed and Shannon
 alphadiv_high <- estimate_richness(upf_phyloseq_rare_high)
 samp_dat_high <- sample_data(upf_phyloseq_rare_high)
 samp_dat_high_wdiv <- data.frame(samp_dat_high, alphadiv_high)
@@ -64,6 +65,13 @@ samp_dat_high_wdiv <- data.frame(samp_dat_high, alphadiv_high)
 wilcox.test(Observed ~ asthma, data=samp_dat_high_wdiv, exact = FALSE)
 wilcox.test(Shannon ~ asthma, data=samp_dat_high_wdiv, exact = FALSE)
 
+# Faith's PD
+phylo_dist_high <- pd(t(otu_table(upf_phyloseq_rare_high)), phy_tree(upf_phyloseq_rare_high),
+                 include.root=F) 
+sample_data(upf_phyloseq_rare_high)$PD <- phylo_dist$PD
+pd_values <- sample_data(upf_phyloseq_rare_high)$PD
+asthma_high <- sample_data(upf_phyloseq_rare_high)$asthma
+wilcox.test(pd_values ~ asthma_high)
 
 #### LOW UPF ####
 # Observed Features and Shannon Diversity
@@ -112,13 +120,21 @@ ggsave(filename = "R_Files/combined_low_upf.png",
        combined_plot, height = 4, width = 9)
 
 
-# Stats
+## Stats
+# Observed and Shannon
 alphadiv_low <- estimate_richness(upf_phyloseq_rare_low)
 samp_dat_low <- sample_data(upf_phyloseq_rare_low)
 samp_dat_low_wdiv <- data.frame(samp_dat_low, alphadiv_low)
 
 wilcox.test(Observed ~ asthma, data=samp_dat_low_wdiv, exact = FALSE)
 wilcox.test(Shannon ~ asthma, data=samp_dat_low_wdiv, exact = FALSE)
+
+# Faith's PD
+phylo_dist_low <- pd(t(otu_table(upf_phyloseq_rare_low)), phy_tree(upf_phyloseq_rare_low), include.root = F)
+sample_data(upf_phyloseq_rare_low)$PD <- phylo_dist_low$PD
+pd_values_low <- sample_data(upf_phyloseq_rare_low)$PD
+asthma_low <- sample_data(upf_phyloseq_rare_low)$asthma
+wilcox.test(pd_values_low ~ asthma_low)
 
 
 #### COMBINED UPF ####
