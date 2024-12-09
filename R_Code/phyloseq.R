@@ -90,7 +90,7 @@ upf_phyloseq_final_high <- subset_samples(upf_phyloseq_nolow_samps_high, !is.na(
 
 # Rarefy samples
 rarecurve(t(as.data.frame(otu_table(upf_phyloseq_final_high))), cex=0.1)
-upf_phyloseq_rare_high <- rarefy_even_depth(upf_phyloseq_final_high, rngseed = 1, sample.size = 1000)
+upf_phyloseq_rare_high <- rarefy_even_depth(upf_phyloseq_final_high, rngseed = 1, sample.size = 6000)
 
 ##### Saving #####
 save(upf_phyloseq_final_high, file="R_Code/upf_phyloseq_final_high.RData")
@@ -124,7 +124,7 @@ upf_phyloseq_final_low <- subset_samples(upf_phyloseq_nolow_samps_low, !is.na(up
 
 # Rarefy samples
 rarecurve(t(as.data.frame(otu_table(upf_phyloseq_final_low))), cex=0.1)
-upf_phyloseq_rare_low <- rarefy_even_depth(upf_phyloseq_final_low, rngseed = 2, sample.size = 1000)
+upf_phyloseq_rare_low <- rarefy_even_depth(upf_phyloseq_final_low, rngseed = 2, sample.size = 6000)
 
 ##### Saving #####
 save(upf_phyloseq_final_low, file="R_Code/upf_phyloseq_final_low.RData")
@@ -209,8 +209,8 @@ upf_phyloseq_final <- subset_samples(upf_phyloseq_nolow_samps, !is.na(upf_status
 
 # Rarefy samples
 rarecurve(t(as.data.frame(otu_table(upf_phyloseq_final))), cex=0.1)
-upf_phyloseq_rare_high <- rarefy_even_depth(upf_phyloseq_final, rngseed = 1, sample.size = 1000)
+upf_phyloseq_rare <- rarefy_even_depth(upf_phyloseq_final, rngseed = 1, sample.size = 6000)
 
 ##### Saving #####
 save(upf_phyloseq_final, file="R_Code/upf_phyloseq_final.RData")
-save(upf_phyloseq_rare_high, file="R_Code/upf_phyloseq_rare.RData")
+save(upf_phyloseq_rare, file="R_Code/upf_phyloseq_rare.RData")
