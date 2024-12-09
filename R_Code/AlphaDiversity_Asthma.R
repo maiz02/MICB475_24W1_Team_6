@@ -124,6 +124,7 @@ wilcox.test(Shannon ~ asthma, data=samp_dat_low_wdiv, exact = FALSE)
 #### COMBINED UPF ####
 # Load data
 load("R_Code/upf_phyloseq_rare.RData")
+# ^ this loads the upf rare high for some reason idk how to fix it!
 
 # Plot Observed and Shannon, high vs low UPF
 gg_richness_high <- plot_richness(upf_phyloseq_rare_high, x = "upf_status", 
@@ -134,9 +135,9 @@ gg_richness_high <- plot_richness(upf_phyloseq_rare_high, x = "upf_status",
 gg_richness_high
 
 # Stats for combined UPF, Observed and Shannon
-alphadiv_high <- estimate_richness(upf_phyloseq_rare_high)
-samp_dat_high <- sample_data(upf_phyloseq_rare_high)
-samp_dat_high_wdiv <- data.frame(samp_dat_high, alphadiv_high)
+alphadiv <- estimate_richness(upf_phyloseq_rare)
+samp_dat <- sample_data(upf_phyloseq_rare)
+samp_dat_wdiv <- data.frame(samp_dat, alphadiv)
 
 wilcox.test(Observed ~ upf_status, data=samp_dat_high_wdiv, exact = FALSE)
 wilcox.test(Shannon ~ upf_status, data=samp_dat_high_wdiv, exact = FALSE)
