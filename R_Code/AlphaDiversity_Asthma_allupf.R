@@ -25,7 +25,7 @@ gg_richness_shannon <- plot_richness(upf_phyloseq_final, x = "upf_asthma",
         legend.position = "none") +
   
   # Annotating only for Shannon plot
-  annotate("text", x = 2.5, y = 6.3, label = "***", size = 5, hjust = 0.5) +
+  annotate("text", x = 2.5, y = 6.3, label = "**", size = 5, hjust = 0.5) +
   annotate("text", x = 3, y = 6.8, label = "*", size = 5, hjust = 0.5) +
   annotate("text", x = 2.5, y = 7.3, label = "*", size = 5, hjust = 0.5) +
   annotate("text", x = 1.5, y = 5.6, label = "*", size = 5, hjust = 0.5,color = "red") +
