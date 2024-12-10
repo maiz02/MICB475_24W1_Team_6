@@ -3,6 +3,9 @@
 ## Attendees
 - Sam
 - Andrea Garcia
+- Vivian Tan
+- Julia Jung
+
 
 ## Agenda
 1) Additional alpha diversity analysis
