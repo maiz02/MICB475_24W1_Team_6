@@ -2,7 +2,6 @@
 library(tidyverse) # For all your basic data wrangling and plotting needs.
 library(phyloseq) # Indispensable package for microbiome analyses. 
 library(ggpubr)
-library(randomcoloR)
 
 set.seed(711)
 
@@ -52,19 +51,6 @@ View(ancom.family)
 #results = format_ancom_results(ancom.family,family,level_letter = 'f')
 
 
-
-# ALDEx2
-library(ALDEx2)
-set.seed(421)
-s = family@sam_data %>% as.matrix() %>% as.data.frame()
-m = model.matrix(~ asthma_yn, data = s)
-o = family@otu_table %>% as.matrix() %>% as.data.frame()
-o = o[2:nrow(o),] %>% dplyr::select(all_of(rownames(m)))
-x = aldex.clr(o,m,mc.samples=128)
-df = aldex.glm(x)
-
-
-
 # First we need to update the column names for each part of the results, because they're currently all the same.
 colnames(ancom.family$res$lfc) = paste(colnames(ancom.family$res$lfc),'_beta',sep='')
 colnames(ancom.family$res$se) = paste(colnames(ancom.family$res$se),'_se',sep='')
@@ -97,11 +83,6 @@ write_xlsx(list('all_results' = results),
 tax_table(family)
 
 
-
-install.packages("scales")
-library(scales)
-
-
 #put bug as whichever family is significant to make each graph. 
 
 ##Butyricicoccaceae
@@ -132,10 +113,7 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Butyricicoccaceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")  # Customize number display
     )
   # Save the plot
   print(p)
@@ -171,10 +149,7 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Lachnospiraceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("Lachnospiraceae (Log-transformed % Ab)")
     )
   # Save the plot
   print(p)
@@ -210,19 +185,18 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Monoglobaceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")
     )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
-}
+}      
 
-#Prevotellaceae             
-bug = "f__Prevotellaceae"
-for (b in bug) {
+
+
+##Prevotellaceae
+bug = "f__Prevotellaceae"  
+  for (b in bug) {
   # Check if the column exists
   if (!b %in% colnames(family_tss_melt)) {
     warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
@@ -249,15 +223,13 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Prevotellaceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")
     )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
-}
+}   
+
 
 # Saving your results
 
