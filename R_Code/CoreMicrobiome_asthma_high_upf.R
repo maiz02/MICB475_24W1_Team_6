@@ -36,7 +36,7 @@ library("sf")
 # Create a Venn diagram using all the ASVs shared and unique to asthma and non-asthma
 high_venn <- ggVennDiagram(x = upf_high_asthma_list_full, 
                            label_alpha = 1.0,
-                           label_size = 5,
+                           label_size = 7,
                            edge_size = 0.5) + 
   coord_cartesian(clip = "off") + 
   coord_fixed(ratio = 0.75)+
