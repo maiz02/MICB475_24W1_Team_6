@@ -34,15 +34,22 @@ library("sf")
 ## MAC USERS BEWARE ENDS HERE##
 
 # Create a Venn diagram using all the ASVs shared and unique to asthma and non-asthma
-high_venn <- ggVennDiagram(x = upf_high_asthma_list_full, 
-                           label_alpha = 1.0,
-                           label_size = 7,
-                           edge_size = 0.5) + 
-  coord_cartesian(clip = "off") + 
-  coord_fixed(ratio = 0.75)+
-  labs(caption = "High UPF")+
-  theme(plot.caption = element_text(hjust = 0.5, size = 14, face = "bold", margin = margin(t = 10)),
-        plot.background = element_rect(fill = "white", color = NA))
+
+high_venn <- ggVennDiagram(
+  x = upf_high_asthma_list_full,
+  label_alpha = 1.0,
+  label_size = 7,
+  edge_size = 0.5
+) +
+  coord_cartesian(clip = "off") +
+  coord_fixed(ratio = 0.75) + 
+  labs(caption = "High UPF") + 
+  theme(
+    plot.caption = element_text(hjust = 0.5, size = 14, face = "bold", margin = margin(t = 10)),
+    plot.background = element_rect(fill = "white", color = NA),
+    text = element_text(face = "bold"))+
+  scale_fill_gradient(low = "lightblue", high = "steelblue")
+
 
 
 ggsave("R_files/venn_asthma_high_upf.png", plot = high_venn, width = 12, height = 7, dpi = 300)
