@@ -10,6 +10,8 @@ library(ape)
 load("R_Code/upf_phyloseq_final.RData")
 load("R_Code/upf_phyloseq_rare.RData")
 
+upf_phyloseq_rare <- upf_phyloseq_rare_high
+
 ###Two way ANOVA
 
 mdl <- lm(Observed ~ upf_status*asthma, data=samp_dat_wdiv)
@@ -25,6 +27,8 @@ format_p <- function(p) {
     return(paste0("p = ", signif(p, 3)))
   }
 }
+
+
 
 obs_asthma <- format_p(wilcox.test(Observed ~ upf_status, data = samp_dat_wdiv, exact = FALSE)$p.value)
 shan_asthma <- format_p(wilcox.test(Shannon ~ upf_status, data = samp_dat_wdiv, exact = FALSE)$p.value)
@@ -168,18 +172,94 @@ ggsave(filename = "R_Files/AlphaDiversity_Plots/combined_high_low_upf.png",
 ## Stats - Wilcoxon test ##
 # Observed and Shannon
 samp_dat <- sample_data(upf_phyloseq_rare)
-alphadiv <- estimate_richness(upf_phyloseq_rare)
+alphadiv <- estimate_richness(upf_phyloseq_rare, measures = c("Observed", "Shannon"))
 samp_dat_wdiv <- cbind(as.data.frame(samp_dat), alphadiv)
 wilcox.test(Observed ~ asthma, data=samp_dat_wdiv, exact = FALSE)
 wilcox.test(Observed ~ upf_status, data=samp_dat_wdiv, exact = FALSE)
 wilcox.test(Shannon ~ asthma, data=samp_dat_wdiv, exact = FALSE)
 wilcox.test(Shannon ~ upf_status, data=samp_dat_wdiv, exact = FALSE)
 
+# High with asthma + low no asthma
+metadata <- sample_data(upf_phyloseq_rare)
+metadata_df <- as.data.frame(metadata)
+observed_features <- estimate_richness(upf_phyloseq_rare, measures = "Observed")
+shannon_diversity <- estimate_richness(upf_phyloseq_rare, measures = "Shannon")
+metadata_df$observed_features <- observed_features$Observed
+metadata_df$shannon_diversity <- shannon_diversity$Shannon
+
+group_high_observed_1 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_high, 1"]
+group_low_observed_1 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_low, 0"]
+wilcox_test_observed_1 <- wilcox.test(group_high_observed_1, group_low_observed_1, alternative = "two.sided")
+wilcox_test_observed_1
+
+group_high_shannon_1 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_high, 1"]
+group_low_shannon_1 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_low, 0"]
+wilcox_test_shannon_1 <- wilcox.test(group_high_shannon_1, group_low_shannon_1, alternative = "two.sided")
+wilcox_test_shannon_1
+
+# High with asthma + low with asthma
+group_high_observed_2 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_high, 1"]
+group_low_observed_2 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_low, 1"]
+wilcox_test_observed_2 <- wilcox.test(group_high_observed_2, group_low_observed_2, alternative = "two.sided")
+wilcox_test_observed_2
+
+group_high_shannon_2 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_high, 1"]
+group_low_shannon_2 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_low, 1"]
+wilcox_test_shannon_2 <- wilcox.test(group_high_shannon_2, group_low_shannon_2, alternative = "two.sided")
+wilcox_test_shannon_2
+
+# High no asthma + low no asthma
+group_high_observed_3 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_high, 0"]
+group_low_observed_3 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_low, 0"]
+wilcox_test_observed_3 <- wilcox.test(group_high_observed_3, group_low_observed_3, alternative = "two.sided")
+wilcox_test_observed_3
+
+group_high_shannon_3 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_high, 0"]
+group_low_shannon_3 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_low, 0"]
+wilcox_test_shannon_3 <- wilcox.test(group_high_shannon_3, group_low_shannon_3, alternative = "two.sided")
+wilcox_test_shannon_3
+
+# High no asthma + low with asthma
+group_high_observed_4 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_high, 0"]
+group_low_observed_4 <- metadata_df$observed_features[metadata_df$upf_asthma == "upf_low, 1"]
+wilcox_test_observed_4 <- wilcox.test(group_high_observed_4, group_low_observed_4, alternative = "two.sided")
+wilcox_test_observed_4
+
+group_high_shannon_4 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_high, 0"]
+group_low_shannon_4 <- metadata_df$shannon_diversity[metadata_df$upf_asthma == "upf_low, 1"]
+wilcox_test_shannon_4 <- wilcox.test(group_high_shannon_4, group_low_shannon_4, alternative = "two.sided")
+wilcox_test_shannon_4
+
+
 # Faith's PD
 phylo_dist <- pd(t(otu_table(upf_phyloseq_rare)), phy_tree(upf_phyloseq_rare),
                  include.root=F) 
 sample_data(upf_phyloseq_rare)$PD <- phylo_dist$PD
 pd_values <- sample_data(upf_phyloseq_rare)$PD
-asthma <- sample_data(upf_phyloseq_rare)$asthma
+asthma_condition <- sample_data(upf_phyloseq_rare)$upf_asthma
 wilcox.test(pd_values ~ asthma)
 wilcox.test(pd_values ~ upf_status)
+
+# High with asthma + low no asthma
+group_high_pd_1 <- pd_values[asthma_condition == "upf_high, 1"]
+group_low_pd_1 <- pd_values[asthma_condition == "upf_low, 0"]
+wilcox_test_pd_1 <- wilcox.test(group_high_pd_1, group_low_pd_1, alternative = "two.sided")
+wilcox_test_pd_1
+
+# High with asthma + low with asthma
+group_high_pd_2 <- pd_values[asthma_condition == "upf_high, 1"]
+group_low_pd_2 <- pd_values[asthma_condition == "upf_low, 1"]
+wilcox_test_pd_2 <- wilcox.test(group_high_pd_2, group_low_pd_2, alternative = "two.sided")
+wilcox_test_pd_2
+
+# High no asthma + low no asthma
+group_high_pd_3 <- pd_values[asthma_condition == "upf_high, 0"]
+group_low_pd_3 <- pd_values[asthma_condition == "upf_low, 0"]
+wilcox_test_pd_3 <- wilcox.test(group_high_pd_3, group_low_pd_3, alternative = "two.sided")
+wilcox_test_pd_3
+
+# High no asthma + low with asthma
+group_high_pd_4 <- pd_values[asthma_condition == "upf_high, 0"]
+group_low_pd_4 <- pd_values[asthma_condition == "upf_low, 1"]
+wilcox_test_pd_4 <- wilcox.test(group_high_pd_4, group_low_pd_4, alternative = "two.sided")
+wilcox_test_pd_4
