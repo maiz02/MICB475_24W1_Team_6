@@ -20,10 +20,10 @@ upf_low_noasthma <- subset_samples(upf_low_RA, `asthma` == 0)
 
 # Identify core microbiome members for each group
 # Adjust prevalence and detection thresholds as necessary
-high_asthma_ASVs <- core_members(upf_high_asthma, detection = 0.001, prevalence = 0.10)
-high_noasthma_ASVs <- core_members(upf_high_noasthma, detection = 0.001, prevalence = 0.10)
-low_asthma_ASVs <- core_members(upf_low_asthma, detection = 0.001, prevalence = 0.10)
-low_noasthma_ASVs <- core_members(upf_low_noasthma, detection = 0.001, prevalence = 0.10)
+high_asthma_ASVs <- core_members(upf_high_asthma, detection = 0.001, prevalence = 0.30)
+high_noasthma_ASVs <- core_members(upf_high_noasthma, detection = 0.001, prevalence = 0.30)
+low_asthma_ASVs <- core_members(upf_low_asthma, detection = 0.001, prevalence = 0.30)
+low_noasthma_ASVs <- core_members(upf_low_noasthma, detection = 0.001, prevalence = 0.30)
 
 # Combine lists into a single data structure
 core_ASVs_list <- list(
@@ -44,7 +44,7 @@ combined_venn <- ggVennDiagram(
   coord_fixed(ratio = 0.75) # Adjust ratio as needed for aesthetics
 
 # Save the combined Venn diagram
-ggsave("R_files/venn_asthma_upf_combined.png", plot = combined_venn, width = 12, height = 7, dpi = 300)
+ggsave("R_files/core_microbiome/venn_asthma_upf_combined.png", plot = combined_venn, width = 12, height = 7, dpi = 300)
 
 
 

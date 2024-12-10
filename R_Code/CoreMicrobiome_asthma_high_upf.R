@@ -52,5 +52,5 @@ high_venn <- ggVennDiagram(
 
 
 
-ggsave("R_files/venn_asthma_high_upf.png", plot = high_venn, width = 12, height = 7, dpi = 300)
+ggsave("R_files/core_microbiome/venn_asthma_high_upf.png", plot = high_venn, width = 12, height = 7, dpi = 300)
 

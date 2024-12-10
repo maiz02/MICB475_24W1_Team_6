@@ -61,5 +61,5 @@ low_venn <- ggVennDiagram(
   scale_fill_gradient(low = "mistyrose", high = "salmon")
 
 
-ggsave("R_files/venn_asthma_low_upf.png", plot = low_venn, width = 12, height = 7, dpi = 300)
+ggsave("R_files/core_microbiome/venn_asthma_low_upf.png", plot = low_venn, width = 12, height = 7, dpi = 300)
 
