@@ -2,7 +2,6 @@
 library(tidyverse) # For all your basic data wrangling and plotting needs.
 library(phyloseq) # Indispensable package for microbiome analyses. 
 library(ggpubr)
-library(randomcoloR)
 library(dplyr)
 
 set.seed(711)
@@ -54,18 +53,6 @@ str(ancom.family)
 View(ancom.family)
 #results = format_ancom_results(ancom.family,family,level_letter = 'f')
 
-
-# ALDEx2
-library(ALDEx2)
-set.seed(421)
-s = family@sam_data %>% as.matrix() %>% as.data.frame()
-m = model.matrix(~ asthma_yn, data = s)
-o = family@otu_table %>% as.matrix() %>% as.data.frame()
-o = o[2:nrow(o),] %>% dplyr::select(all_of(rownames(m)))
-x = aldex.clr(o,m,mc.samples=128)
-df = aldex.glm(x)
-
-
 # Update the column names for each part of the results, because they're currently all the same.
 colnames(ancom.family$res$lfc) = paste(colnames(ancom.family$res$lfc),'_beta',sep='')
 colnames(ancom.family$res$se) = paste(colnames(ancom.family$res$se),'_se',sep='')
@@ -98,16 +85,11 @@ write_xlsx(list('all_results' = results),
 tax_table(family)
 
 
-
-install.packages("scales")
-library(scales)
-
-
 #put bug as whichever family is significant to make each graph. 
 
 ##Butyricicoccaceae
 bug = "f__Butyricicoccaceae"
-for (b in bug) {
+  for (b in bug) {
   # Check if the column exists
   if (!b %in% colnames(family_tss_melt)) {
     warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
@@ -123,7 +105,8 @@ for (b in bug) {
     }
   }
 
- colors <- c("blue", "red")
+  # Generate random colors
+  colors <- c("blue", "red")
 
   # Create the plot
   p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
@@ -133,19 +116,16 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Butyricicoccaceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")
     )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
-}
+}   
 
 #Coriobacteriaceae
 bug = "f__Coriobacteriaceae"
-for (b in bug) {
+  for (b in bug) {
   # Check if the column exists
   if (!b %in% colnames(family_tss_melt)) {
     warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
@@ -161,7 +141,8 @@ for (b in bug) {
     }
   }
 
- colors <- c("blue", "red")
+  # Generate random colors
+  colors <- c("blue", "red")
 
   # Create the plot
   p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
@@ -171,19 +152,17 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Coriobacteriaceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")
     )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
-}
+}   
+
 
 #Erysipelatoclostridiaceae
-bug = "f__Erysipelatoclostridiaceae"
-for (b in bug) {
+bug = "f__Erysipelatoclostridiaceae"  
+  for (b in bug) {
   # Check if the column exists
   if (!b %in% colnames(family_tss_melt)) {
     warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
@@ -199,7 +178,8 @@ for (b in bug) {
     }
   }
 
- colors <- c("blue", "red")
+  # Generate random colors
+  colors <- c("blue", "red")
 
   # Create the plot
   p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
@@ -209,20 +189,17 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Erysipelatoclostridiaceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")
     )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
-}
+}   
 
 
 #Lachnospiraceae 
 bug = "f__Lachnospiraceae"
-for (b in bug) {
+  for (b in bug) {
   # Check if the column exists
   if (!b %in% colnames(family_tss_melt)) {
     warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
@@ -238,7 +215,8 @@ for (b in bug) {
     }
   }
 
- colors <- c("blue", "red")
+  # Generate random colors
+  colors <- c("blue", "red")
 
   # Create the plot
   p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
@@ -248,20 +226,18 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Lachnospiraceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")
     )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
-}
+}   
+
 
 
 #Ruminococcaceae
 bug = "f__Ruminococcaceae"
-for (b in bug) {
+  for (b in bug) {
   # Check if the column exists
   if (!b %in% colnames(family_tss_melt)) {
     warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
@@ -277,7 +253,8 @@ for (b in bug) {
     }
   }
 
- colors <- c("blue", "red")
+  # Generate random colors
+  colors <- c("blue", "red")
 
   # Create the plot
   p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
@@ -287,20 +264,12 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Ruminococcaceae (Log-transformed % Ab)") +
-    scale_y_continuous(
-      trans = 'log10', 
-      labels = label_number(scale = 1, accuracy = 0.001)  # Customize number display
+    ylab("% Ab")
     )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
-}
-
-
-
-
-
+}   
 
 
 
