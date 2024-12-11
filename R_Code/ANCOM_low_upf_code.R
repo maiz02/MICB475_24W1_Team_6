@@ -115,7 +115,8 @@ bug = "f__Butyricicoccaceae"
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") +
+        theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -150,7 +151,8 @@ bug = "f__Coriobacteriaceae"
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") + 
+        theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -186,7 +188,8 @@ bug = "f__Erysipelatoclostridiaceae"
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") + 
+        theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -222,7 +225,8 @@ bug = "f__Lachnospiraceae"
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") + 
+        theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -259,7 +263,8 @@ bug = "f__Ruminococcaceae"
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") + 
+        theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -294,7 +299,8 @@ bug = "f__UCG-010"
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") + 
+        theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
