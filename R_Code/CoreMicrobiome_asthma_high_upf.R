@@ -47,7 +47,9 @@ high_venn <- ggVennDiagram(
   theme(
     plot.caption = element_text(hjust = 0.5, size = 14, face = "bold", margin = margin(t = 10)),
     plot.background = element_rect(fill = "white", color = NA),
-    text = element_text(face = "bold"))+
+    text = element_text(face = "bold", family = "Helvetica"),
+legend.text = element_text(family = "Helvetica"),
+  legend.title = element_text(family = "Helvetica"))+
   scale_fill_gradient(low = "lightblue", high = "steelblue")
 
 

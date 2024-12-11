@@ -55,10 +55,12 @@ low_venn <- ggVennDiagram(
   coord_fixed(ratio = 0.75) + 
   labs(caption = "Low UPF") + 
   theme(
-    plot.caption = element_text(hjust = 0.5, size = 14, face = "bold", margin = margin(t = 10)),
+    plot.caption = element_text(family = "Helvetica", hjust = 0.5, size = 14, face = "bold", margin = margin(t = 10)),
     plot.background = element_rect(fill = "white", color = NA),
-    text = element_text(face = "bold"))+
+    text = element_text(face = "bold", family = "Helvetica"),
+    legend.text = element_text(family = "Helvetica"))+
   scale_fill_gradient(low = "mistyrose", high = "salmon")
+
 
 
 ggsave("R_files/core_microbiome/venn_asthma_low_upf.png", plot = low_venn, width = 12, height = 7, dpi = 300)
