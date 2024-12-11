@@ -2,7 +2,6 @@
 library(tidyverse) # For all your basic data wrangling and plotting needs.
 library(phyloseq) # Indispensable package for microbiome analyses. 
 library(ggpubr)
-library(dplyr)
 
 set.seed(711)
 
@@ -117,7 +116,6 @@ bug = "f__Butyricicoccaceae"
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -153,7 +151,6 @@ bug = "f__Coriobacteriaceae"
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -190,7 +187,6 @@ bug = "f__Erysipelatoclostridiaceae"
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -227,7 +223,6 @@ bug = "f__Lachnospiraceae"
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -265,7 +260,6 @@ bug = "f__Ruminococcaceae"
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
