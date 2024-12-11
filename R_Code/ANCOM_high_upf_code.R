@@ -113,7 +113,8 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")  # Customize number display
+    ylab("% Ab") +
+theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -148,7 +149,8 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("Lachnospiraceae (Log-transformed % Ab)")
+    ylab("% Ab") + 
+theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -183,7 +185,8 @@ for (b in bug) {
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") + 
+      theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -220,7 +223,8 @@ bug = "f__Prevotellaceae"
     theme(legend.position = "none") +
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
-    ylab("% Ab")
+    ylab("% Ab") + 
+        theme(text = element_text(family = "Helvetica"))
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
