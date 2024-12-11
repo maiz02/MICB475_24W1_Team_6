@@ -16,10 +16,15 @@ gg_richness_high <- plot_richness(upf_phyloseq_rare_high, x = "upf_asthma",
                                   measures = c("Observed","Shannon")) +
   xlab(" ") +
   scale_x_discrete(labels = c("No Asthma", "Asthma")) +
-  geom_boxplot() +
-  theme(axis.text.x = element_text(angle = 0, hjust = 0.5))  
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5))  +
+  geom_boxplot(aes(fill = asthma_yn), alpha = 0.7, outlier.shape = NA) +  
+  scale_fill_manual(values = c("no" = "steelblue", "yes" = "salmon"),
+                    name = "Asthma status") + 
+  scale_y_continuous(limits = c(0, NA)) +
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5),
+        axis.title.x = element_blank(),
+        legend.position = "none")
 gg_richness_high
-
 ggsave(filename = "R_Files/gg_richness_high.png", 
        gg_richness_high,
        height=4, width=6)
@@ -32,10 +37,13 @@ sample_data(upf_phyloseq_rare_high)$PD <- phylo_dist_high$PD
 
 pd_plot_high <- ggplot(sample_data(upf_phyloseq_rare_high), aes(upf_asthma, PD)) + 
   geom_point(position = position_dodge(width = 1), size = 1.5, alpha = 1) +
-  geom_boxplot() +
+  geom_boxplot(aes(fill = asthma_yn), alpha = 0.7, outlier.shape = NA) + 
   xlab(" ") +
   scale_x_discrete(labels = c("No Asthma", "Asthma")) +  # Label adjustment
   ylab("Phylogenetic Diversity") +
+  scale_y_continuous(limits = c(0, NA)) +
+  scale_fill_manual(values = c("no" = "steelblue", "yes" = "salmon"),
+                    name = "Asthma status") +
   theme(axis.text.x = element_text(size = 9), axis.text.y = element_text(size = 9),
         axis.title.x = element_text(size = 11), axis.title.y = element_text(size = 11))+
   scale_colour_manual(name="", values=c(Com = "lightgrey") )
@@ -53,6 +61,7 @@ ggsave(filename = "R_Files/pd_plot_high.png",
 
 combined_plot <- gg_richness_high + pd_plot_high + 
   plot_layout(ncol = 2, widths = c(2, 1))
+combined_plot
 ggsave(filename = "R_Files/combined_high_upf.png", 
        combined_plot, height = 4, width = 9)
 
@@ -68,7 +77,7 @@ wilcox.test(Shannon ~ asthma, data=samp_dat_high_wdiv, exact = FALSE)
 # Faith's PD
 phylo_dist_high <- pd(t(otu_table(upf_phyloseq_rare_high)), phy_tree(upf_phyloseq_rare_high),
                  include.root=F) 
-sample_data(upf_phyloseq_rare_high)$PD <- phylo_dist$PD
+sample_data(upf_phyloseq_rare_high)$PD <- phylo_dist_high$PD
 pd_values <- sample_data(upf_phyloseq_rare_high)$PD
 asthma_high <- sample_data(upf_phyloseq_rare_high)$asthma
 wilcox.test(pd_values ~ asthma_high)
@@ -79,13 +88,23 @@ gg_richness_low <- plot_richness(upf_phyloseq_rare_low, x = "upf_asthma",
                                   measures = c("Observed","Shannon")) +
   xlab(" ") +
   scale_x_discrete(labels = c("No Asthma", "Asthma")) +
-  geom_boxplot() +
-  theme(axis.text.x = element_text(angle = 0, hjust = 0.5))  
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5))  +
+  geom_boxplot(aes(fill = asthma_yn), alpha = 0.7, outlier.shape = NA) +  
+  scale_fill_manual(values = c("no" = "steelblue", "yes" = "salmon"),
+                    name = "Asthma status") + 
+  scale_y_continuous(limits = c(0, NA)) +
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5),
+        axis.title.x = element_blank(),
+        legend.position = "none")
 gg_richness_low
+
+
+
 
 ggsave(filename = "R_Files/gg_richness_low.png", 
        gg_richness_low,
        height=4, width=6)
+
 
 # Faith's PD
 phylo_dist_low <- pd(t(otu_table(upf_phyloseq_rare_low)), phy_tree(upf_phyloseq_rare_low),
@@ -95,10 +114,13 @@ sample_data(upf_phyloseq_rare_low)$PD <- phylo_dist_low$PD
 
 pd_plot_low <- ggplot(sample_data(upf_phyloseq_rare_low), aes(upf_asthma, PD)) + 
   geom_point(position = position_dodge(width = 1), size = 1.5, alpha = 1) +
-  geom_boxplot() +
+  geom_boxplot(aes(fill = asthma_yn), alpha = 0.7, outlier.shape = NA) + 
   xlab(" ") +
   scale_x_discrete(labels = c("No Asthma", "Asthma")) +  # Label adjustment
   ylab("Phylogenetic Diversity") +
+  scale_y_continuous(limits = c(0, NA)) +
+  scale_fill_manual(values = c("no" = "steelblue", "yes" = "salmon"),
+                    name = "Asthma status") +
   theme(axis.text.x = element_text(size = 9), axis.text.y = element_text(size = 9),
         axis.title.x = element_text(size = 11), axis.title.y = element_text(size = 11))+
   scale_colour_manual(name="", values=c(Com = "lightgrey") )
@@ -114,8 +136,9 @@ ggsave(filename = "R_Files/pd_plot_low.png",
        height=4, width=3)
 
 
-combined_plot <- gg_richness_low + pd_plot_low + 
+combined_plot_low <- gg_richness_low + pd_plot_low + 
   plot_layout(ncol = 2, widths = c(2, 1))
+combined_plot_low
 ggsave(filename = "R_Files/combined_low_upf.png", 
        combined_plot, height = 4, width = 9)
 
