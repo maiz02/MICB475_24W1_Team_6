@@ -1,7 +1,6 @@
 
 library(tidyverse) # For all your basic data wrangling and plotting needs.
 library(phyloseq) # Indispensable package for microbiome analyses. 
-library(dplyr)
 library(ggpubr)
 
 set.seed(711)
