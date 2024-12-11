@@ -6,7 +6,7 @@ library(ggpubr)
 set.seed(711)
 
 #Load phyloseq
-load("R_Code/upf_phyloseq_final_low.RData")
+load("upf_phyloseq_final_low.RData")
 
 #clean it up
 hist(sample_sums(upf_phyloseq_final_low),breaks = 30) 
