@@ -115,7 +115,6 @@ for (b in bug) {
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")  # Customize number display
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -151,7 +150,6 @@ for (b in bug) {
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("Lachnospiraceae (Log-transformed % Ab)")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -187,7 +185,6 @@ for (b in bug) {
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
@@ -225,7 +222,6 @@ bug = "f__Prevotellaceae"
     scale_fill_manual(values = colors) +
     xlab("Presence of Asthma") +
     ylab("% Ab")
-    )
   # Save the plot
   print(p)
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
