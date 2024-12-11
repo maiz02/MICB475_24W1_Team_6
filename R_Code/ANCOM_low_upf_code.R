@@ -265,6 +265,40 @@ bug = "f__Ruminococcaceae"
   ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
 }   
 
+#UCG-010
+bug = "f__UCG-010"
+  for (b in bug) {
+  # Check if the column exists
+  if (!b %in% colnames(family_tss_melt)) {
+    warning(paste("Column", b, "not found in family_tss_melt. Skipping."))
+    next
+  }
+  
+  # Check if the column is numeric
+  if (!is.numeric(family_tss_melt[[b]])) {
+    family_tss_melt[[b]] <- as.numeric(family_tss_melt[[b]])
+    if (anyNA(family_tss_melt[[b]])) {
+      warning(paste("Column", b, "contains non-convertible values. Skipping."))
+      next
+    }
+  }
+
+  # Generate random colors
+  colors <- c("blue", "red")
+
+  # Create the plot
+  p <- ggplot(family_tss_melt, aes(x = asthma_yn, y = family_tss_melt[[b]], fill = asthma_yn)) +
+    geom_boxplot(outlier.shape = NA) +
+    geom_jitter(height = 0, width = 0.2) +
+    theme_classic(base_size = 16) +
+    theme(legend.position = "none") +
+    scale_fill_manual(values = colors) +
+    xlab("Presence of Asthma") +
+    ylab("% Ab")
+  # Save the plot
+  print(p)
+  ggsave(paste0("tss_", b, ".jpeg"), plot = p, height = 5, width = 5)
+}   
 
 
 # Saving your results
