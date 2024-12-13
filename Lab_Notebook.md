@@ -24,6 +24,10 @@ Yna <br>
 Yna <br>
 - updated the code and the metadata file to change Scotland to UK
 
+Andrea <br>
+- completed all data processing in QIIME2
+- ran initial beta diversity metrics for asthma and allergy groups
+
 **October 23** <br>
 Julia <br>
 - updated the code and the metadata file to combine high/low UPF countries
@@ -51,6 +55,10 @@ Yna <br>
 Julia <br>
 - generated phyloseq objects of upf_high / upf_low groups
 
+**November 23** <br>
+Andrea <br>
+- ran ISA on high and low UPF groups 
+
 **November 24** <br>
 Chaeyoon <br>
 - ran core microbiome analysis and generated venn diagrams for high and low upf groups
@@ -63,3 +71,6 @@ Julia <br>
 **December 9** <br>
 Yna <br>
 - generated stats for new alpha diversity analysis
+
+Andrea <br>
+- generated updated PCoA plots to show clusters according to UPF status
