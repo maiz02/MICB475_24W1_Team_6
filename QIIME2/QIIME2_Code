@@ -108,7 +108,7 @@ qiime diversity alpha-rarefaction \
 qiime diversity core-metrics-phylogenetic \
   --i-phylogeny ms_rooted_tree.qza \
   --i-table ms_final_filtered_table.qza \
-  --p-sampling-depth 4300 \
+  --p-sampling-depth 6000 \
   --m-metadata-file ~/data/dataset_files/updated_filtered_ms_metadata.tsv \
   --output-dir ms_core_metrics_results
 
