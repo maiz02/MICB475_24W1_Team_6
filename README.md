@@ -16,4 +16,7 @@
 
 ## [Lab Notebook](/Lab_Notebook.md) ##
 
-## Finalized Codes ##
+## Final Outputs ##
+1) [Codes for QIIME2](/QIIME2)
+2) [Codes for R](/R)
+3) [Final Outputs](/Final_Visualized_Outputs)
