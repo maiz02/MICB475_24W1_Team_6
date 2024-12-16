@@ -13,6 +13,7 @@
 10) [November 25](/Meeting_Minutes/November_25.md)
 11) [December 2](/Meeting_Minutes/December_2.md)
 12) [December 9](/Meeting_Minutes/December_9.md)
+13) [December 16](/Meeting_Minutes/December_16.md)
 
 ## [Lab Notebook](/Lab_Notebook.md) ##
 
